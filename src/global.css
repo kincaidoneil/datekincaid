@@ -1,0 +1,131 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+body {
+  background: var(--color-slate-50);
+}
+
+@font-face {
+  font-family: "Leap";
+  src: url("/fonts/Leap.otf");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-sans: "Albert Sans", "Avenir", "sans-serif";
+  --font-serif: "Hedvig Letters Serif Variable", "Garamond", "serif";
+  --font-leap: "Leap", "serif";
+
+  /* TODO Change these to just fade 'into the ether' in the middle...? */
+
+  --ease-in-cubic: cubic-bezier(0.32, 0, 0.67, 0);
+
+  --animate-float-up: 14s linear infinite float-up;
+  @keyframes float-up {
+    0%,
+    10% {
+      transform: translateY(15px);
+    }
+    90%,
+    100% {
+      transform: translateY(-65px);
+    }
+  }
+
+  --animate-float-down: 3s ease-in infinite float-down;
+  @keyframes float-down {
+    /* Repeat keyframes at beginning & end for "delay" between iterations */
+    0%,
+    10% {
+      transform: translateY(-20px);
+    }
+    80% {
+      filter: blur(2px);
+      opacity: 1;
+    }
+    90% {
+      transform: translateY(15px);
+    }
+    95%,
+    100% {
+      filter: blur(4px);
+      opacity: 0;
+    }
+  }
+
+  --animate-alert: 3s ease-in-out infinite alert;
+  @keyframes alert {
+    0%,
+    60%,
+    100% {
+      opacity: 0;
+      animation-timing-function: linear;
+    }
+
+    30% {
+      opacity: 1;
+    }
+  }
+
+  --animate-fade-in: 0.2s ease-out fade-in;
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  --animate-scale-in: 0.25s cubic-bezier(0.16, 1, 0.3, 1) scale-in;
+  @keyframes scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+}
+
+.prose {
+  /* Base margins */
+  :where(h1, h2, h3, h4, h5, h6, p, blockquote, li, ul, ol, dl, img) {
+    margin-bottom: 1em;
+  }
+
+  /* Remove beginning and ending margins */
+  *:first-child {
+    margin-top: 0;
+  }
+
+  *:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Small gap when a larger heading is followed by a smaller heading/paragraph/image/list */
+  :where(h1, h2, h3, h4, h5, h6)
+    + :where(h2, h3, h4, h5, h6, p, blockquote, img, ul, ol) {
+    /* Note: these are `em` units, so scaled with the font size of the heading.
+         Suppose the a 32px heading is followed by a 16px paragraph.
+         The space between will be 10px (collapsing 16px and -6px). */
+    margin-top: -1em;
+  }
+
+  /* Large gap when a smaller heading/paragraph/image/list is followed by a larger heading */
+  :where(h4, h5, h6, p, blockquote, img, ul, ol)
+    + :where(h1, h2, h3, h4, h5, h6) {
+    margin-top: 2em;
+  }
+
+  .not-prose {
+    :where(h1, h2, h3, h4, h5, h6, p, blockquote, img, li, ul, ol, dl, img) {
+      margin-top: unset;
+      margin-bottom: unset;
+    }
+  }
+}

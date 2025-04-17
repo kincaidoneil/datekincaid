@@ -1,13 +1,28 @@
-import { defineConfig } from "astro/config";
+import { defineConfig } from "astro/config"
+import tailwindcss from "@tailwindcss/vite"
 
-import tailwindcss from "@tailwindcss/vite";
+import react from "@astrojs/react"
 
-import vercel from "@astrojs/vercel";
+import rehypeExternalLinks from "rehype-external-links"
 
-// https://astro.build/config
+import vercel from "@astrojs/vercel"
+
 export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-  adapter: vercel(),
-});
+
+  integrations: [react()],
+
+  markdown: {
+    remarkPlugins: [],
+    rehypePlugins: [
+      [rehypeExternalLinks, { target: "_blank", rel: ["noopener"] }], // Omit `noreferrer` - I want Gathers to see referral
+    ],
+  },
+
+  output: "server",
+  adapter: vercel({
+    edgeMiddleware: true,
+  }),
+})
