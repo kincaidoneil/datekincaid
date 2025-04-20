@@ -31,13 +31,18 @@ export const prerender = true
 
 <Layout>
   <main class="mx-auto max-w-xl pb-12 font-serif @2xs:pt-20">
-    <header class="sticky top-0 z-0 overflow-hidden">
-      <Image
-        src={Hero}
-        alt="Majestic man staring into the distance in Lisbon"
-        priority={true}
-        class="h-auto w-full"
-      />
+    <header class="sticky top-0 z-0 overflow-hidden px-5 pt-8">
+      <div class="relative h-auto w-full overflow-clip rounded-2xl">
+        <Image
+          src={Hero}
+          alt="Majestic man staring into the distance in Lisbon"
+          priority={true}
+        />
+        <!-- TODO -->
+        <div
+          class="absolute inset-0 rounded-2xl shadow-[inset_0_0_20px_var(--color-neutral-300)]">
+        </div>
+      </div>
     </header>
 
     <Prose>
@@ -73,11 +78,12 @@ export const prerender = true
             </section>
 
             <section class="flex flex-col gap-4">
-              <Image
-                class="rounded-2xl"
-                src={RunningDay}
-                alt="Kincaid in motion"
-              />
+              <div class="relative overflow-clip rounded-2xl">
+                <Image src={RunningDay} alt="Kincaid in motion" class="!m-0" />
+                <div
+                  class="absolute inset-0 rounded-2xl shadow-[inset_0_0_20px_var(--color-neutral-300)]">
+                </div>
+              </div>
 
               <Image
                 class="rounded-2xl"

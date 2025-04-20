@@ -52,12 +52,14 @@ export default function FriendZoneDialog({ children }: FriendZoneDialogProps) {
     <Dialog.Root>
       <Dialog.Trigger asChild>
         <button
-          className="relative grid h-14 cursor-pointer place-content-center overflow-clip rounded-full bg-orange-600 px-3 py-3 font-sans text-xl leading-none font-black tracking-normal text-white uppercase shadow-xl transition active:scale-95"
+          className="relative grid h-14 w-36 cursor-pointer place-content-center overflow-clip rounded-full bg-gradient-to-b from-amber-500 to-orange-600 px-3 py-3 font-sans text-xl leading-none font-black tracking-normal text-white uppercase shadow-xl transition active:scale-95"
           onClick={triggerConfetti}>
-          <Radiation className="animate-alert absolute top-1/2 left-1 -translate-y-1/2 scale-[1.5] rounded-full stroke-white/60 stroke-1" />
-          <Radiation className="animate-alert absolute top-1/2 right-1 -translate-y-1/2 scale-[1.5] rounded-full stroke-white/60 stroke-1" />
+          <Radiation className="animate-alert absolute top-1/2 left-1 h-7 w-7 -translate-y-1/2 rounded-full stroke-white/60 stroke-1" />
+          <Radiation className="animate-alert absolute top-1/2 right-1 h-7 w-7 -translate-y-1/2 rounded-full stroke-white/60 stroke-1" />
           <span className="relative z-10">
-            Friend<span className="text-orange-200">zone</span>
+            Friend
+            <br />
+            <span className="text-orange-200">zone</span>
           </span>
         </button>
       </Dialog.Trigger>

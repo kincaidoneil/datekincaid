@@ -55,7 +55,7 @@ body {
     }
   }
 
-  --animate-alert: 3s ease-in-out infinite alert;
+  --animate-alert: 2s ease-in-out infinite alert;
   @keyframes alert {
     0%,
     60%,
@@ -64,7 +64,8 @@ body {
       animation-timing-function: linear;
     }
 
-    30% {
+    20%,
+    40% {
       opacity: 1;
     }
   }
