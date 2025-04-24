@@ -12,6 +12,12 @@ Running with other people is great, too, for different reasons. The shared energ
 
 I’ve also tried my hand at salsa and bachata, though that comes less naturally to me and was more motivated as a “let’s do something really uncomfortable that seems cool!” thing. (Any recs for studios in NYC?)
 
+<figure>
+  <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4AntJoNSbWUxcKb8J5QjBY?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+
+  <figcaption>From the running playlist</figcaption>
+</figure>
+
 ### Craft
 
 I _love_ the satisfaction from concocting an elegant solution to a complex problem.
