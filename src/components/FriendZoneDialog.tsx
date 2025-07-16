@@ -66,6 +66,7 @@ export default function FriendZoneDialog({ children }: FriendZoneDialogProps) {
 
       <Dialog.Portal>
         <Dialog.Overlay className="animate-fade-in fixed inset-0 z-40 bg-black/50 backdrop-blur-sm" />
+        <Dialog.Title>Congrats! You’ve friendzoned Kincaid.</Dialog.Title>
         <Dialog.Content className="animate-scale-in fixed top-1/2 left-1/2 z-50 w-full max-w-md -translate-x-1/2 -translate-y-1/2 rounded-lg bg-white p-8 shadow-xl">
           {children}
         </Dialog.Content>

@@ -1,14 +1,13 @@
 ---
-import { Image } from "astro:assets"
-import ActionBanner from "@/components/ActionBanner.astro"
-import Layout from "@/layouts/Layout.astro"
-import Hero from "@/assets/lisbon.jpg"
-import RunningNight from "@/assets/running-night.jpg"
-import RunningDay from "@/assets/running-day.jpg"
-import Melon from "@/assets/melon.jpg"
-import Chow from "@/assets/chow.jpg"
-import Cat from "@/assets/cat.png"
-import Fam from "@/assets/fam.jpg"
+import ActionBanner from '@/components/ActionBanner.tsx'
+import Layout from '@/layouts/Layout.astro'
+import Hero from '@/assets/lisbon.jpg'
+import RunningNight from '@/assets/running-night.jpg'
+import RunningDay from '@/assets/running-day.jpg'
+import Melon from '@/assets/melon.jpg'
+import Chow from '@/assets/chow.jpg'
+import Cat from '@/assets/cat.png'
+import Fam from '@/assets/fam.jpg'
 import {
   Cake,
   Ruler,
@@ -18,13 +17,15 @@ import {
   Landmark,
   School,
   Briefcase,
-} from "lucide-react"
-import Chip from "@/components/Chip.astro"
-import { Content as ValuesCopy } from "@/copy/values.md"
-import { Content as LookingForCopy } from "@/copy/looking-for.md"
-import { Content as WhyCopy } from "@/copy/why.md"
-import { Content as IntroCopy } from "@/copy/intro.md"
-import Prose from "@/components/Prose.astro"
+} from 'lucide-react'
+import Chip from '@/components/Chip.astro'
+import { Content as ValuesCopy } from '@/copy/values.md'
+import { Content as LookingForCopy } from '@/copy/looking-for.md'
+import { Content as WhyCopy } from '@/copy/why.md'
+import { Content as IntroCopy } from '@/copy/intro.md'
+import Prose from '@/components/Prose.astro'
+import LightboxImage from '@/components/LightboxImage.astro'
+import { Content as GathersCopy } from '@/copy/gathers.md'
 
 export const prerender = true
 ---
@@ -33,19 +34,15 @@ export const prerender = true
   <main class="mx-auto max-w-xl pb-12 font-serif @2xs:pt-20">
     <header class="sticky top-0 z-0 overflow-hidden px-5 pt-8">
       <div class="relative h-auto w-full overflow-clip rounded-2xl">
-        <Image
+        <LightboxImage
           src={Hero}
           alt="Majestic man staring into the distance in Lisbon"
           priority={true}
         />
-        <!-- TODO -->
-        <div
-          class="absolute inset-0 rounded-2xl shadow-[inset_0_0_20px_var(--color-neutral-300)]">
-        </div>
       </div>
     </header>
 
-    <Prose>
+    <Prose as="article" class="relative z-10">
       <div class="relative z-10 bg-slate-50 pt-4">
         <div class="pt-8">
           <section class="flex flex-col gap-16 px-5">
@@ -77,16 +74,10 @@ export const prerender = true
               </div>
             </section>
 
-            <section class="flex flex-col gap-4">
-              <div class="relative overflow-clip rounded-2xl">
-                <Image src={RunningDay} alt="Kincaid in motion" class="!m-0" />
-                <div
-                  class="absolute inset-0 rounded-2xl shadow-[inset_0_0_20px_var(--color-neutral-300)]">
-                </div>
-              </div>
+            <section class="flex flex-col gap-8">
+              <LightboxImage src={RunningDay} alt="Kincaid in motion" />
 
-              <Image
-                class="rounded-2xl"
+              <LightboxImage
                 src={RunningNight}
                 alt="Man (shredded), running in the night (run club in Boston)"
               />
@@ -101,27 +92,18 @@ export const prerender = true
 
               <div class="not-prose flex w-full flex-row gap-4">
                 <figure class="w-1/2">
-                  <Image
+                  <LightboxImage
                     src={Fam}
                     alt="Kincaid smiling with his sister and dad"
-                    class="rounded-2xl"
                   />
                   <figcaption class="px-2 py-1 text-sm">The fam 🙂</figcaption>
                 </figure>
                 <figure class="m-0 w-1/2">
-                  <Image
-                    src={Chow}
-                    alt="Kincaid supporting a friend"
-                    class="rounded-2xl"
-                  />
+                  <LightboxImage src={Chow} alt="Kincaid supporting a friend" />
                 </figure>
               </div>
 
-              <Image
-                src={Melon}
-                alt="Kincaid raising a melon"
-                class="rounded-2xl"
-              />
+              <LightboxImage src={Melon} alt="Kincaid raising a melon" />
             </section>
 
             <section>
@@ -129,13 +111,17 @@ export const prerender = true
             </section>
 
             <div class="flex flex-col gap-4 pb-8">
-              <Image src={Cat} alt="Kincaid in the wild" class="rounded-2xl" />
+              <LightboxImage src={Cat} alt="Kincaid in the wild" />
 
               <h1 class="!mt-0">Now, you must choose.</h1>
             </div>
           </section>
 
-          <ActionBanner />
+          <ActionBanner client:visible>
+            <Prose>
+              <GathersCopy />
+            </Prose>
+          </ActionBanner>
         </div>
 
         <section class="px-5 pt-64">

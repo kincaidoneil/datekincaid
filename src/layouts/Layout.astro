@@ -1,10 +1,10 @@
 ---
-import PostHog from "@/components/PostHog.astro"
-import "@/global.css"
+import PostHog from '@/components/PostHog.astro'
+import '@/global.css'
 
-import "@fontsource-variable/hedvig-letters-serif"
-import "@fontsource/albert-sans"
-import "@fontsource/albert-sans/900"
+import '@fontsource-variable/hedvig-letters-serif'
+import '@fontsource/albert-sans'
+import '@fontsource/albert-sans/900'
 ---
 
 <!doctype html>
@@ -29,8 +29,20 @@ import "@fontsource/albert-sans/900"
 
     <PostHog />
     <script is:inline async src="https://tally.so/widgets/embed.js"></script>
+    <script>
+      import PhotoSwipeLightbox from 'photoswipe/lightbox'
+      import PhotoSwipe from 'photoswipe'
+      import 'photoswipe/style.css'
+
+      const lightbox = new PhotoSwipeLightbox({
+        gallery: '#content',
+        children: 'a[data-pswp-width]',
+        pswpModule: PhotoSwipe,
+      })
+      lightbox.init()
+    </script>
   </head>
-  <body class="antialiased">
+  <body id="content" class="antialiased">
     <slot />
   </body>
 </html>
