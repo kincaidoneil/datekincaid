@@ -1,8 +1,8 @@
 ---
-import { ImageMetadata } from "astro"
-import { LocalImageProps } from "astro:assets"
-import { Image } from "astro:assets"
-import { twMerge } from "tailwind-merge"
+import { ImageMetadata } from 'astro'
+import { LocalImageProps } from 'astro:assets'
+import { Image } from 'astro:assets'
+import { twMerge } from 'tailwind-merge'
 
 type Props = LocalImageProps & {
   src: ImageMetadata
@@ -16,5 +16,12 @@ const { class: className, ...props } = Astro.props
   data-pswp-width={props.src.width}
   data-pswp-height={props.src.height}
   class="block">
-  <Image {...props} class={twMerge("rounded-3xl", className)} />
+  <Image
+    draggable="false"
+    {...props}
+    class={twMerge(
+      'rounded-3xl transition active:scale-95 cursor-pointer duration-150',
+      className
+    )}
+  />
 </a>
