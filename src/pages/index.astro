@@ -52,7 +52,7 @@ export const prerender = true
         Then, add a spacer <div> so the wrapper is the true height of the hero image.
       */
     }
-    <div class="box-content pt-8">
+    <div class="relative box-content pt-8">
       <div
         class="sticky top-8 z-0 px-5"
         style={{
@@ -66,115 +66,116 @@ export const prerender = true
       </div>
 
       <div style={{ height: `calc(${heroHeight} * ${SPACER_PERCENT})` }}></div>
+
+      {
+        /*
+          Inverted corners overlaid on hero image to maintain rounded corners, even while sticky.
+          Refer to this SVG arc reference:
+          https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorials/SVG_from_scratch/Paths#arcs
+
+          Negative margins are to prevent a glitch in Safari iOS where a slive of the underlying image
+          is visible while scrolling because it doesn't properly overlap.
+        */
+      }
+      <svg
+        class="absolute bottom-0 left-5 -mb-[0.2px] -ml-[0.2px] h-6 w-6"
+        viewBox="0 0 24 24">
+        <path d="M 0 0 A 24 24, 0, 0, 0, 24 24 L 0 24 Z" class="fill-slate-50"
+        ></path>
+      </svg>
+
+      <svg
+        class="absolute right-5 bottom-0 -mr-[0.2px] -mb-[0.2px] h-6 w-6"
+        viewBox="0 0 24 24">
+        <path d="M 24 0 A 24 24, 0, 0, 1, 0 24 L 24 24 Z" class="fill-slate-50"
+        ></path>
+      </svg>
     </div>
 
-    <Prose as="article" class="relative z-10">
-      <div class="relative z-10 bg-slate-50 pt-4">
-        {
-          /*
-            Inverted corners overlaid on hero image to maintain rounded corners, even while sticky.
-            Refer to this SVG arc reference:
-            https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorials/SVG_from_scratch/Paths#arcs
-          */
-        }
-        <div
-          class="absolute -top-6 z-30 flex h-6 w-full flex-row justify-between px-5 text-slate-50">
-          <svg class="h-6 w-6" viewBox="0 0 16 16">
-            <path d="M 0 0 A 16 16, 0, 0, 0, 16 16 L 0 16 Z" fill="currentColor"
-            ></path>
-          </svg>
+    <Prose as="article" class="relative z-10 bg-slate-50 pt-4">
+      <div class="pt-8">
+        <section class="flex flex-col gap-16 px-5">
+          <section class="flex flex-col gap-8">
+            <header>
+              <IntroCopy />
+            </header>
 
-          <svg class="h-6 w-6" viewBox="0 0 16 16">
-            <path
-              d="M 16 0 A 16 16, 0, 0, 1, 0 16 L 16 16 Z"
-              fill="currentColor"></path>
-          </svg>
-        </div>
-
-        <div class="pt-8">
-          <section class="flex flex-col gap-16 px-5">
-            <section class="flex flex-col gap-8">
-              <header>
-                <IntroCopy />
-              </header>
-
-              <div class="grid grid-cols-2 gap-x-1 gap-y-1">
-                <Chip Icon={Cake} alt="Age"> 27 </Chip>
-                <Chip Icon={Ruler} alt="Height"> 5’ 8.75” </Chip>
-                <Chip Icon={MapPin} alt="Location"> Brooklyn, NY </Chip>
-                <Chip Icon={House} alt="Hometown"> Minneapolis, MN </Chip>
-                <Chip Icon={Baby} alt="Wants children"> In 5+ years </Chip>
-                <Chip Icon={Landmark} alt="Politics"> Liberal </Chip>
-                <Chip Icon={School} alt="Education">
-                  Northeastern University
-                </Chip>
-                <Chip Icon={Briefcase} alt="Work">
-                  <span>
-                    Founder at <a
-                      href="https://gathers.social?utm_source=date_kincaid"
-                      target="_blank"
-                      rel="noopener">
-                      Gathers
-                    </a>
-                  </span>
-                </Chip>
-              </div>
-            </section>
-
-            <section class="flex flex-col gap-8">
-              <LightboxImage src={RunningDay} alt="Kincaid in motion" />
-
-              <LightboxImage
-                src={RunningNight}
-                alt="Man (shredded), running in the night (run club in Boston)"
-              />
-            </section>
-
-            <section>
-              <ValuesCopy />
-            </section>
-
-            <section>
-              <h3>Relationships</h3>
-
-              <div class="not-prose flex w-full flex-row gap-4">
-                <figure class="w-1/2">
-                  <LightboxImage
-                    src={Fam}
-                    alt="Kincaid smiling with his sister and dad"
-                  />
-                  <figcaption class="px-2 py-1 text-sm">The fam 🙂</figcaption>
-                </figure>
-                <figure class="m-0 w-1/2">
-                  <LightboxImage src={Chow} alt="Kincaid supporting a friend" />
-                </figure>
-              </div>
-
-              <LightboxImage src={Melon} alt="Kincaid raising a melon" />
-            </section>
-
-            <section>
-              <LookingForCopy />
-            </section>
-
-            <div class="flex flex-col gap-4 pb-8">
-              <LightboxImage src={Cat} alt="Kincaid in the wild" />
-
-              <h1 class="mt-0!">Now, you must choose.</h1>
+            <div class="grid grid-cols-2 gap-x-1 gap-y-1">
+              <Chip Icon={Cake} alt="Age"> 27 </Chip>
+              <Chip Icon={Ruler} alt="Height"> 5’ 8.75” </Chip>
+              <Chip Icon={MapPin} alt="Location"> Brooklyn, NY </Chip>
+              <Chip Icon={House} alt="Hometown"> Minneapolis, MN </Chip>
+              <Chip Icon={Baby} alt="Wants children"> In 5+ years </Chip>
+              <Chip Icon={Landmark} alt="Politics"> Liberal </Chip>
+              <Chip Icon={School} alt="Education">
+                Northeastern University
+              </Chip>
+              <Chip Icon={Briefcase} alt="Work">
+                <span>
+                  Founder at <a
+                    href="https://gathers.social?utm_source=date_kincaid"
+                    target="_blank"
+                    rel="noopener">
+                    Gathers
+                  </a>
+                </span>
+              </Chip>
             </div>
           </section>
 
-          <ActionBanner client:visible>
-            <Prose>
-              <GathersCopy />
-            </Prose>
-          </ActionBanner>
-        </div>
+          <section class="flex flex-col gap-8">
+            <LightboxImage src={RunningDay} alt="Kincaid in motion" />
 
-        <section class="px-5 pt-64">
-          <WhyCopy />
+            <LightboxImage
+              src={RunningNight}
+              alt="Man (shredded), running in the night (run club in Boston)"
+            />
+          </section>
+
+          <section>
+            <ValuesCopy />
+          </section>
+
+          <section>
+            <h3>Relationships</h3>
+
+            <div class="not-prose flex w-full flex-row gap-4">
+              <figure class="w-1/2">
+                <LightboxImage
+                  src={Fam}
+                  alt="Kincaid smiling with his sister and dad"
+                />
+                <figcaption class="px-2 py-1 text-sm">The fam 🙂</figcaption>
+              </figure>
+              <figure class="m-0 w-1/2">
+                <LightboxImage src={Chow} alt="Kincaid supporting a friend" />
+              </figure>
+            </div>
+
+            <LightboxImage src={Melon} alt="Kincaid raising a melon" />
+          </section>
+
+          <section>
+            <LookingForCopy />
+          </section>
+
+          <div class="flex flex-col gap-4 pb-8">
+            <LightboxImage src={Cat} alt="Kincaid in the wild" />
+
+            <h1 class="mt-0!">Now, you must choose.</h1>
+          </div>
         </section>
+
+        <ActionBanner client:visible>
+          <Prose>
+            <GathersCopy />
+          </Prose>
+        </ActionBanner>
       </div>
+
+      <section class="px-5 pt-64">
+        <WhyCopy />
+      </section>
     </Prose>
   </main>
 </Layout>
