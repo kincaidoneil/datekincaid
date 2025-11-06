@@ -7,7 +7,19 @@ body {
 
 @font-face {
   font-family: "Leap";
-  src: url("/fonts/Leap.otf");
+  /*
+   * Original OTF by @wechoose.themoon (https://www.instagram.com/wechoose.themoon/)
+   * Source: https://www.dropbox.com/scl/fo/p5bhvmmd0ovi1mrysc5ri/ADYyaa3TVwnUvfl-HXNpzpI?rlkey=46yw1swenjp47ml0tyu1avznd&e=1&st=lw5c4g67&dl=0
+   *
+   * The original (Fontself Maker-generated) OTF kept failing Safari's Safe Font Parser
+   * in iOS 26+ lockdown mode. To fix, Claude Code used fonttools to:
+   * - Convert from CFF/PostScript to TrueType outlines
+   * - Strip empty GSUB table
+   * - Strip Fontself metadata (meta table)
+   *
+   * After these changes, it passes lockdown mode validation.
+   */
+  src: url("/fonts/Leap.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
