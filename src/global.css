@@ -6,6 +6,47 @@ body {
 }
 
 @font-face {
+  font-family: "Hedvig Letters Serif Variable";
+  font-style: normal;
+  font-display: block;
+  font-weight: 400;
+  src: url("@fontsource-variable/hedvig-letters-serif/files/hedvig-letters-serif-latin-opsz-normal.woff2")
+    format("woff2-variations");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
+}
+
+/* TODO Switch to albert sans variable? */
+
+@font-face {
+  font-family: "Albert Sans";
+  font-style: normal;
+  font-display: block;
+  font-weight: 400;
+  src: url(@fontsource/albert-sans/files/albert-sans-latin-400-normal.woff2)
+    format("woff2");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Albert Sans";
+  font-style: normal;
+  font-display: block;
+  font-weight: 900;
+  src: url(@fontsource/albert-sans/files/albert-sans-latin-900-normal.woff2)
+    format("woff2");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
   font-family: "Leap";
   /*
    * Original OTF by @wechoose.themoon (https://www.instagram.com/wechoose.themoon/)
@@ -17,18 +58,21 @@ body {
    * - Strip empty GSUB table
    * - Strip Fontself metadata (meta table)
    *
-   * After these changes, it passes lockdown mode validation.
+   * After these changes, it renders in lockdown mode, and is much smaller to boot.
    */
-  src: url("/fonts/Leap.woff2") format("woff2");
+  src:
+    url("/fonts/Leap.woff2") format("woff2"),
+    url("/fonts/Leap.otf") format("opentype");
+  /* TODO WOFF FONT DIDN'T WORK IN NON LOCKDOWN MODE, WTF. */
   font-weight: normal;
   font-style: normal;
-  font-display: swap;
+  font-display: block;
 }
 
 @theme {
-  --font-sans: "Albert Sans", "Avenir", "sans-serif";
-  --font-serif: "Hedvig Letters Serif Variable", "Garamond", "serif";
-  --font-leap: "Leap", "serif";
+  --font-sans: "Albert Sans", "Avenir", sans-serif;
+  --font-serif: "Hedvig Letters Serif Variable", "Garamond", serif;
+  --font-leap: "Leap", serif;
 
   /* TODO Change these to just fade 'into the ether' in the middle...? */
 
@@ -67,47 +111,41 @@ body {
     }
   }
 
-  --animate-alert: 2s ease-in-out infinite alert;
+  --animate-alert: 1.4s ease-in-out infinite alert;
   @keyframes alert {
     0%,
-    60%,
+    80%,
     100% {
       opacity: 0;
       animation-timing-function: linear;
     }
 
-    20%,
-    40% {
+    25%,
+    55% {
       opacity: 1;
-    }
-  }
-
-  --animate-fade-in: 0.2s ease-out fade-in;
-  @keyframes fade-in {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-
-  --animate-scale-in: 0.25s cubic-bezier(0.16, 1, 0.3, 1) scale-in;
-  @keyframes scale-in {
-    from {
-      opacity: 0;
-      transform: scale(0);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
     }
   }
 }
 
 .prose {
   /* Base margins */
-  :where(h1, h2, h3, h4, h5, h6, p, blockquote, li, ul, ol, dl, img) {
+  :where(
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    blockquote,
+    li,
+    ul,
+    ol,
+    dl,
+    img,
+    section,
+    header
+  ) {
     margin-bottom: 1em;
   }
 
@@ -122,7 +160,7 @@ body {
 
   /* Small gap when a larger heading is followed by a smaller heading/paragraph/image/list */
   :where(h1, h2, h3, h4, h5, h6)
-    + :where(h2, h3, h4, h5, h6, p, blockquote, img, ul, ol) {
+    + :where(h2, h3, h4, h5, h6, p, blockquote, img, ul, ol, section, header) {
     /* Note: these are `em` units, so scaled with the font size of the heading.
          Suppose the a 32px heading is followed by a 16px paragraph.
          The space between will be 10px (collapsing 16px and -6px). */
@@ -130,15 +168,38 @@ body {
   }
 
   /* Large gap when a smaller heading/paragraph/image/list is followed by a larger heading */
-  :where(h4, h5, h6, p, blockquote, img, ul, ol)
+  :where(h4, h5, h6, p, blockquote, img, ul, ol, section, header)
     + :where(h1, h2, h3, h4, h5, h6) {
     margin-top: 2em;
   }
 
   .not-prose {
-    :where(h1, h2, h3, h4, h5, h6, p, blockquote, img, li, ul, ol, dl, img) {
+    :where(
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      p,
+      blockquote,
+      img,
+      li,
+      ul,
+      ol,
+      dl,
+      img,
+      section,
+      header
+    ) {
       margin-top: unset;
       margin-bottom: unset;
     }
+  }
+
+  /* Undo some Tailwind typography styles */
+  :where(figcaption) {
+    margin-top: unset;
+    margin-bottom: unset;
   }
 }

@@ -1,0 +1,16 @@
+import type { LucideIcon } from "lucide-react"
+
+interface Props {
+  Icon: LucideIcon
+  alt: string
+  children: React.ReactNode
+}
+
+export function Chip({ Icon, alt, children }: Props) {
+  return (
+    <div className="flex h-fit flex-row items-center gap-2.5 rounded-full py-1 font-sans leading-tight subpixel-antialiased ring-0">
+      <Icon className="stroke-1.5 h-5.5 self-start" aria-label={alt} />
+      {children}
+    </div>
+  )
+}

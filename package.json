@@ -1,32 +1,28 @@
 {
   "name": "datekincaid",
   "type": "module",
-  "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
     "format": "prettier --write ."
   },
+  "packageManager": "pnpm@10.22.0",
   "dependencies": {
-    "@astrojs/check": "^0.9.5",
-    "@astrojs/react": "^4.4.2",
-    "@astrojs/ts-plugin": "^1.10.5",
-    "@astrojs/vercel": "^9.0.0",
     "@fontsource-variable/hedvig-letters-serif": "^5.2.8",
     "@fontsource/albert-sans": "^5.2.8",
-    "@radix-ui/react-dialog": "^1.1.15",
+    "@posthog/react": "^1.4.0",
     "@tailwindcss/vite": "^4.1.17",
-    "@types/react": "^19.2.2",
-    "@types/react-dom": "^19.2.2",
+    "@types/react": "^19.2.4",
+    "@types/react-dom": "^19.2.3",
     "@vercel/edge": "^1.2.2",
-    "astro": "^5.15.4",
     "canvas-confetti": "^1.9.4",
     "lucide": "^0.553.0",
     "lucide-react": "^0.553.0",
     "motion": "^12.23.24",
     "photoswipe": "^5.4.4",
+    "posthog-js": "^1.292.0",
+    "qrcode": "^1.5.4",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "rehype-external-links": "^3.0.0",
@@ -35,11 +31,16 @@
     "typescript": "^5.9.3"
   },
   "devDependencies": {
+    "@mdx-js/rollup": "^3.1.1",
     "@tailwindcss/typography": "^0.5.19",
     "@types/canvas-confetti": "^1.9.0",
+    "@types/qrcode": "^1.5.6",
+    "@unpic/react": "^1.0.1",
+    "@vitejs/plugin-react": "^5.1.1",
     "prettier": "^3.6.2",
-    "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-tailwindcss": "^0.7.1",
-    "sharp": "^0.34.5"
+    "sharp": "^0.34.5",
+    "vite": "^7.2.2",
+    "vite-imagetools": "^9.0.0"
   }
 }
