@@ -52,8 +52,7 @@ export function ReferralButton() {
         url: url.toString(),
       })
     } catch {
-      navigator.clipboard.writeText(url.toString())
-      alert("Copied link!")
+      await navigator.clipboard.writeText(url.toString())
       // TODO Show toast - copied link to clipboard. Use sonner?
     }
   }, [posthog])
