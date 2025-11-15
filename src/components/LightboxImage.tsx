@@ -29,14 +29,15 @@ export function LightboxImage({
         alt={alt}
         width={width}
         height={height}
-        priority={priority}
         loading="eager"
+        fetchPriority={priority ? "high" : "low"}
         draggable={false}
         className={twMerge(
           "cursor-pointer rounded-3xl transition duration-150 active:scale-95",
           className,
         )}
-        background="auto"
+        cdn={import.meta.env.VITE_VERCEL_ENV ? "vercel" : undefined}
+        breakpoints={[320, 640, 960, 1280]} // Vercel only optimizations sizes explicitly defined in vercel.json - must match
       />
     </a>
   )

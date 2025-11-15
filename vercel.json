@@ -1,4 +1,14 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "images": {
+    "sizes": [320, 640, 960, 1280],
+    "localPatterns": [
+      {
+        "pathname": "^/assets/.*$",
+        "search": ""
+      }
+    ]
+  },
   "rewrites": [
     {
       "source": "/client/static/:path(.*)",
