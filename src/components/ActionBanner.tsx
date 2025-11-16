@@ -7,7 +7,7 @@ import {
   useVelocity,
   useSpring,
 } from "motion/react"
-import { ReferralButton } from "./ReferButton"
+import { ReferButton } from "./ReferButton"
 import { useFontsReady } from "@/hooks/use-fonts-ready"
 
 export function ActionBanner() {
@@ -58,7 +58,9 @@ export function ActionBanner() {
           visualDuration: 2,
         }}
         className="sticky inset-x-0 bottom-0 z-30 w-full pb-6">
-        <div className="flex max-w-4xl flex-row items-end justify-center gap-6">
+        <div className="pointer-events-none absolute inset-0 z-20 h-full w-full bg-linear-to-b from-transparent to-slate-50" />
+
+        <div className="relative z-30 flex max-w-4xl flex-row items-end justify-center gap-6">
           <motion.div
             variants={childVariants}
             transition={{ type: "spring", visualDuration: 1 }}>
@@ -71,7 +73,7 @@ export function ActionBanner() {
             variants={childVariants}
             transition={{ type: "spring", visualDuration: 1 }}>
             <motion.div style={{ y: y2 }}>
-              <ReferralButton />
+              <ReferButton />
             </motion.div>
           </motion.div>
         </div>
@@ -88,8 +90,15 @@ function DateButton() {
       data-tally-layout="modal"
       data-tally-open="wM5APk"
       className="font-leap relative grid h-14 w-36 cursor-pointer place-content-center overflow-clip rounded-full bg-linear-to-b from-pink-400 to-red-600 px-6 py-4 text-[1.6rem] leading-none tracking-wider text-white uppercase shadow-xl transition active:scale-95">
-      <HeartIcon className="animate-float-down absolute top-0 left-1 origin-center stroke-white/70 blur-[1.5px]" />
-      <HeartIcon className="animate-float-up absolute right-2 -bottom-2 origin-center stroke-white/70 blur-[1.5px]" />
+      <HeartIcon className="animate-float absolute top-0 left-1 origin-center stroke-white/70 blur-[1.5px]" />
+      <HeartIcon
+        className="animate-float absolute right-1 bottom-0 origin-center stroke-white/70 blur-[1.5px]"
+        style={
+          {
+            "--float-direction": -1,
+          } as React.CSSProperties
+        }
+      />
       Date
     </button>
   )

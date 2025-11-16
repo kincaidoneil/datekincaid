@@ -1,5 +1,4 @@
 import confetti from "canvas-confetti"
-import { GemIcon } from "lucide-react"
 import { usePostHog } from "@posthog/react"
 import { useCallback } from "react"
 
@@ -37,7 +36,7 @@ function triggerConfetti() {
   })
 }
 
-export function ReferralButton() {
+export function ReferButton() {
   const posthog = usePostHog()
   const share = useCallback(async () => {
     triggerConfetti()
@@ -61,8 +60,6 @@ export function ReferralButton() {
     <button
       className="relative grid h-14 w-36 cursor-pointer place-content-center overflow-clip rounded-full bg-linear-to-b from-amber-500 to-orange-600 px-1 py-3 font-sans text-lg leading-none font-black tracking-normal text-orange-50 uppercase shadow-xl transition active:scale-95"
       onClick={share}>
-      <GemIcon className="animate-alert absolute top-4 left-1 h-6 w-6 -translate-y-1/2 rounded-full stroke-orange-200/80 stroke-1 blur-[1px]" />
-      <GemIcon className="animate-alert absolute top-4 right-1 h-6 w-6 -translate-y-1/2 rounded-full stroke-orange-200/80 stroke-1 blur-[1px]" />
       <span className="relative z-10">
         Refer a <br />
         <span className="text-orange-200">hot</span> friend

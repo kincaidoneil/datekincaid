@@ -25,26 +25,28 @@ export function HeroImage() {
 
       Then, add a spacer <div> so the wrapper is the true height of the hero image.
     */
-    <motion.div
-      className="relative"
-      initial={{ filter: "brightness(2)", opacity: 0 }}
-      animate={{ filter: "brightness(1)", opacity: 1 }}
-      transition={{
-        duration: 1,
-        ease: "easeInOut",
-      }}>
+    <div className="relative">
       <div
         className="sticky top-8 z-0 px-5"
         style={{
           height: `calc(${heroHeight} * ${STICKY_END_PERCENT})`,
         }}>
-        <LightboxImage
-          src={Hero.src}
-          alt="Majestic man staring into the distance in Lisbon"
-          width={Hero.width}
-          height={Hero.height}
-          priority={true}
-        />
+        {/* Enter animation is defined here, instead of on root div, so the gray corner overlays aren't brightened */}
+        <motion.div
+          initial={{ filter: "brightness(2)", opacity: 0 }}
+          animate={{ filter: "brightness(1)", opacity: 1 }}
+          transition={{
+            duration: 1,
+            ease: "easeInOut",
+          }}>
+          <LightboxImage
+            src={Hero.src}
+            alt="Majestic man staring into the distance in Lisbon"
+            width={Hero.width}
+            height={Hero.height}
+            priority={true}
+          />
+        </motion.div>
       </div>
 
       <div style={{ height: `calc(${heroHeight} * ${SPACER_PERCENT})` }}></div>
@@ -72,6 +74,6 @@ export function HeroImage() {
           d="M 24 0 A 24 24, 0, 0, 1, 0 24 L 24 24 Z"
           className="fill-slate-50"></path>
       </svg>
-    </motion.div>
+    </div>
   )
 }

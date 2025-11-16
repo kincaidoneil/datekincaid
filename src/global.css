@@ -74,55 +74,28 @@ body {
   --font-serif: "Hedvig Letters Serif Variable", "Garamond", serif;
   --font-leap: "Leap", serif;
 
-  /* TODO Change these to just fade 'into the ether' in the middle...? */
-
-  --ease-in-cubic: cubic-bezier(0.32, 0, 0.67, 0);
-
-  --animate-float-up: 14s linear infinite float-up;
-  @keyframes float-up {
-    0%,
-    10% {
-      transform: translateY(15px);
-    }
-    90%,
-    100% {
-      transform: translateY(-65px);
-    }
-  }
-
-  --animate-float-down: 3s ease-in infinite float-down;
-  @keyframes float-down {
+  --float-direction: 1;
+  --animate-float: 3s ease-in infinite float;
+  @keyframes float {
     /* Repeat keyframes at beginning & end for "delay" between iterations */
-    0%,
-    10% {
-      transform: translateY(-20px);
+    0% {
+      transform: translateY(calc(var(--float-direction) * -20px));
     }
-    80% {
+
+    75% {
       filter: blur(2px);
-      opacity: 1;
-    }
-    90% {
-      transform: translateY(15px);
-    }
-    95%,
-    100% {
-      filter: blur(4px);
-      opacity: 0;
-    }
-  }
-
-  --animate-alert: 1.4s ease-in-out infinite alert;
-  @keyframes alert {
-    0%,
-    80%,
-    100% {
-      opacity: 0;
-      animation-timing-function: linear;
+      scale: 1;
     }
 
-    25%,
-    55% {
+    95% {
       opacity: 1;
+    }
+
+    100% {
+      filter: blur(12px);
+      opacity: 0;
+      scale: 2;
+      transform: translateY(calc(var(--float-direction) * 24px));
     }
   }
 }
