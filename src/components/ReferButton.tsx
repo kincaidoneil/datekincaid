@@ -47,7 +47,7 @@ export function ReferButton() {
     try {
       await navigator.share({
         title: "Date Kincaid",
-        text: "girlie i found you a man!!!",
+        text: "i found you a man",
         url: url.toString(),
       })
     } catch {

@@ -19,6 +19,7 @@
     "@types/react-dom": "^19.2.3",
     "@vercel/edge": "^1.2.2",
     "canvas-confetti": "^1.9.4",
+    "jotai": "^2.15.1",
     "lucide": "^0.553.0",
     "lucide-react": "^0.553.0",
     "motion": "^12.23.24",

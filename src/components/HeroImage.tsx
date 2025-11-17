@@ -2,19 +2,20 @@ import { motion } from "motion/react"
 import { LightboxImage } from "./LightboxImage"
 
 import Hero from "@/assets/lisbon.jpg?as=metadata"
+import { useSetAtom } from "jotai"
+import { heroAnimationCompleteAtom } from "./Header"
 
 // Hero height based on constrained width and aspect ratio
 // max-w-xl => 36rem
 // px-5 => 1.25rem * 2 = 2.5rem
-const HERO_WIDTH = Hero.width
-const HERO_HEIGHT = Hero.height
-const heroAspectRatio = (HERO_HEIGHT / HERO_WIDTH).toFixed(5)
-const heroHeight = `((min(100vw, 36rem) - 2.5rem) * ${heroAspectRatio})`
+const HERO_ASPECT_RATIO = (Hero.height / Hero.width).toFixed(5)
+const HERO_HEIGHT = `((min(100vw, 36rem) - 2.5rem) * ${HERO_ASPECT_RATIO})`
 
 const STICKY_END_PERCENT = 0.413
 const SPACER_PERCENT = 1 - STICKY_END_PERCENT
 
 export function HeroImage() {
+  const setAnimationComplete = useSetAtom(heroAnimationCompleteAtom)
   return (
     /*
       Scroll effect:
@@ -29,7 +30,7 @@ export function HeroImage() {
       <div
         className="sticky top-8 z-0 px-5"
         style={{
-          height: `calc(${heroHeight} * ${STICKY_END_PERCENT})`,
+          height: `calc(${HERO_HEIGHT} * ${STICKY_END_PERCENT})`,
         }}>
         {/* Enter animation is defined here, instead of on root div, so the gray corner overlays aren't brightened */}
         <motion.div
@@ -37,8 +38,9 @@ export function HeroImage() {
           animate={{ filter: "brightness(1)", opacity: 1 }}
           transition={{
             duration: 1,
-            ease: "easeInOut",
-          }}>
+            ease: "easeOut",
+          }}
+          onAnimationComplete={() => setAnimationComplete(true)}>
           <LightboxImage
             src={Hero.src}
             alt="Majestic man staring into the distance in Lisbon"
@@ -49,7 +51,10 @@ export function HeroImage() {
         </motion.div>
       </div>
 
-      <div style={{ height: `calc(${heroHeight} * ${SPACER_PERCENT})` }}></div>
+      <div
+        style={{
+          height: `calc(${HERO_HEIGHT} * ${SPACER_PERCENT})`,
+        }}></div>
 
       {/*
         Inverted corners overlaid on hero image to maintain rounded corners, even while sticky/"shrinking".

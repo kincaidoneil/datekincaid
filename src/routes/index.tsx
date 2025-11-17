@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router"
-import { useEffect } from "react"
+import { useLayoutEffect } from "react"
 import PhotoSwipeLightbox from "photoswipe/lightbox"
 import "photoswipe/style.css"
 import { MotionConfig } from "motion/react"
@@ -21,8 +21,6 @@ import { Chip } from "@/components/Chip"
 import { FloatIntoView } from "@/components/FloatIntoView"
 import { HeroImage } from "@/components/HeroImage"
 import { AnalyticsProvider } from "@/components/Analytics"
-
-import IntroCopy from "@/copy/intro.mdx"
 import ValuesCopy from "@/copy/values.mdx"
 import LookingForCopy from "@/copy/looking-for.mdx"
 import WhyCopy from "@/copy/why.mdx"
@@ -34,6 +32,7 @@ import Melon from "@/assets/melon.jpg?as=metadata"
 import Chow from "@/assets/chow.jpg?as=metadata"
 import Cat from "@/assets/cat.png?as=metadata"
 import Fam from "@/assets/fam.jpg?as=metadata"
+import { Header } from "@/components/Header"
 
 export const Route = createFileRoute("/")({
   component: Home,
@@ -48,7 +47,7 @@ export const Route = createFileRoute("/")({
 })
 
 function Home() {
-  useEffect(() => {
+  useLayoutEffect(() => {
     const lightbox = new PhotoSwipeLightbox({
       gallery: "body",
       children: "a[data-pswp-width]",
@@ -72,11 +71,9 @@ function Home() {
             className="relative z-10 bg-slate-50 px-5 pt-12">
             {/* This contains the sticky CTA banner */}
             <section>
-              <header>
-                <IntroCopy />
-              </header>
+              <Header />
 
-              <section className="grid grid-cols-2 gap-x-1 gap-y-1">
+              <section className="mb-8! grid grid-cols-2 gap-x-1 gap-y-1">
                 <Chip Icon={Cake} alt="Age">
                   27
                 </Chip>
