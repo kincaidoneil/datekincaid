@@ -1,6 +1,6 @@
+import { createFileRoute } from "@tanstack/react-router"
 import { useEffect } from "react"
 import PhotoSwipeLightbox from "photoswipe/lightbox"
-import PhotoSwipe from "photoswipe"
 import "photoswipe/style.css"
 import { MotionConfig } from "motion/react"
 import {
@@ -35,12 +35,24 @@ import Chow from "@/assets/chow.jpg?as=metadata"
 import Cat from "@/assets/cat.png?as=metadata"
 import Fam from "@/assets/fam.jpg?as=metadata"
 
-export default function App() {
+export const Route = createFileRoute("/")({
+  component: Home,
+  head: () => ({
+    scripts: [
+      {
+        async: true,
+        src: "https://tally.so/widgets/embed.js",
+      },
+    ],
+  }),
+})
+
+function Home() {
   useEffect(() => {
     const lightbox = new PhotoSwipeLightbox({
       gallery: "body",
       children: "a[data-pswp-width]",
-      pswpModule: PhotoSwipe,
+      pswpModule: () => import("photoswipe"),
       showAnimationDuration: 250,
       hideAnimationDuration: 250,
     })
