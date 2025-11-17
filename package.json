@@ -9,8 +9,8 @@
   },
   "packageManager": "pnpm@10.22.0",
   "dependencies": {
+    "@fontsource-variable/albert-sans": "^5.2.8",
     "@fontsource-variable/hedvig-letters-serif": "^5.2.8",
-    "@fontsource/albert-sans": "^5.2.8",
     "@posthog/react": "^1.4.0",
     "@tailwindcss/vite": "^4.1.17",
     "@tanstack/react-router": "^1.136.6",
@@ -19,6 +19,7 @@
     "@types/react-dom": "^19.2.3",
     "@vercel/edge": "^1.2.2",
     "canvas-confetti": "^1.9.4",
+    "class-variance-authority": "^0.7.1",
     "jotai": "^2.15.1",
     "lucide": "^0.553.0",
     "lucide-react": "^0.553.0",

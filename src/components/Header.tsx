@@ -1,11 +1,11 @@
 import { useState } from "react"
 import { Typewriter } from "./Typewriter"
-import { atom, useAtomValue, useSetAtom } from "jotai"
-import { useDebounce } from "@/hooks"
-
-export const heroAnimationCompleteAtom = atom(false)
-
-export const typingAnimationsCompleteAtom = atom(false)
+import { useAtomValue, useSetAtom } from "jotai"
+import { useDebounce, useSearchParams } from "@/hooks"
+import {
+  heroAnimationCompleteAtom,
+  typingAnimationsCompleteAtom,
+} from "@/utils"
 
 export function Header() {
   const heroAnimationComplete = useAtomValue(heroAnimationCompleteAtom)
@@ -17,6 +17,9 @@ export function Header() {
   const readyForAnimation3 = useDebounce(animation2Complete, 200)
 
   const setTypingAnimationsComplete = useSetAtom(typingAnimationsCompleteAtom)
+
+  const searchParams = useSearchParams()
+  const vip = searchParams.get("vip")
 
   return (
     <header className="flex flex-col gap-4">
@@ -33,8 +36,11 @@ export function Header() {
         <Typewriter
           play={readyForAnimation2}
           onComplete={() => setAnimation2Complete(true)}
-          charDelay={30}>
-          I’m looking for a woman in NYC.
+          charDelay={30}
+          punctuationDelay={200}>
+          {vip
+            ? "If you’re reading this, you caught my eye."
+            : "I’m looking for a woman in NYC. "}
         </Typewriter>
       </h4>
 
@@ -44,8 +50,9 @@ export function Header() {
           charDelay={30}
           punctuationDelay={250}
           onComplete={() => setTypingAnimationsComplete(true)}>
-          Let’s grab a drink, build a pillow fort, and plot our political power
-          couple ascension.
+          {vip
+            ? "Want to grab a drink, build a pillow fort, and plot our political power couple ascension?"
+            : "Let’s grab a drink, build a pillow fort, and plot our political power couple ascension."}
         </Typewriter>
       </h4>
     </header>

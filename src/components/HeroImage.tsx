@@ -3,7 +3,7 @@ import { LightboxImage } from "./LightboxImage"
 
 import Hero from "@/assets/lisbon.jpg?as=metadata"
 import { useSetAtom } from "jotai"
-import { heroAnimationCompleteAtom } from "./Header"
+import { heroAnimationCompleteAtom } from "@/utils"
 
 // Hero height based on constrained width and aspect ratio
 // max-w-xl => 36rem
@@ -37,8 +37,8 @@ export function HeroImage() {
           initial={{ filter: "brightness(2)", opacity: 0 }}
           animate={{ filter: "brightness(1)", opacity: 1 }}
           transition={{
-            duration: 1,
-            ease: "easeOut",
+            duration: 0.6,
+            ease: "easeInOut",
           }}
           onAnimationComplete={() => setAnimationComplete(true)}>
           <LightboxImage

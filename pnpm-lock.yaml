@@ -8,10 +8,10 @@ importers:
 
   .:
     dependencies:
-      '@fontsource-variable/hedvig-letters-serif':
+      '@fontsource-variable/albert-sans':
         specifier: ^5.2.8
         version: 5.2.8
-      '@fontsource/albert-sans':
+      '@fontsource-variable/hedvig-letters-serif':
         specifier: ^5.2.8
         version: 5.2.8
       '@posthog/react':
@@ -38,6 +38,9 @@ importers:
       canvas-confetti:
         specifier: ^1.9.4
         version: 1.9.4
+      class-variance-authority:
+        specifier: ^0.7.1
+        version: 0.7.1
       jotai:
         specifier: ^2.15.1
         version: 2.15.1(@babel/core@7.28.5)(@babel/template@7.27.2)(@types/react@19.2.4)(react@19.2.0)
@@ -424,11 +427,11 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@fontsource-variable/albert-sans@5.2.8':
+    resolution: {integrity: sha512-hDtxW/K8gj8y+42BvH50UUIgpY7oriWXi+79Aam0MN+BIwk2CyN3kI/NP37e39PvC1625UFHEyBi48IcMy3DiA==}
+
   '@fontsource-variable/hedvig-letters-serif@5.2.8':
     resolution: {integrity: sha512-BTC4+tmlfYdV4HtjVvqbbgYw4++ckcgdgjCKrPwTR4jf7+LSeUE5nS5N8ORg6UbQSYA+8+1sZFBV64hfDWca8A==}
-
-  '@fontsource/albert-sans@5.2.8':
-    resolution: {integrity: sha512-DCBojiRL/lxTC+fQPwg2eoszTo4dX3uH6iWmpsZ0ytn8rGfhUNl5QJjZNEVQmbZgeRRDZqc5iaPTl1+9AxU2Lg==}
 
   '@img/colour@1.0.0':
     resolution: {integrity: sha512-A5P/LfWGFSl6nsckYtjw9da+19jB8hkJ6ACTGcDfEJ0aE+l2n2El7dsVM7UVHZQ9s2lmYMWlrS21YLy2IR1LUw==}
@@ -1130,8 +1133,15 @@ packages:
     resolution: {integrity: sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw==}
     engines: {node: '>= 8.10.0'}
 
+  class-variance-authority@0.7.1:
+    resolution: {integrity: sha512-Ka+9Trutv7G8M6WT6SeiRWz792K5qEqIGEGzXKhAE6xOWAY6pPH8U+9IY3oCMv6kqTmLsv7Xh/2w2RigkePMsg==}
+
   cliui@6.0.0:
     resolution: {integrity: sha512-t6wbgtoCXvAzst7QgXxJYqPt0usEfbgQdftEPbLL/cvv6HPE5VgvqCuAIDR0NgU52ds6rFwqrgakNLrHEjCbrQ==}
+
+  clsx@2.1.1:
+    resolution: {integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==}
+    engines: {node: '>=6'}
 
   collapse-white-space@2.1.0:
     resolution: {integrity: sha512-loKTxY1zCOuG4j9f6EPnuyyYkf58RnhhWTvRoZEokgB+WbdXehfjFviyOVYkqzEWz1Q5kRiZdBYS5SwxbQYwzw==}
@@ -2549,9 +2559,9 @@ snapshots:
   '@esbuild/win32-x64@0.25.12':
     optional: true
 
-  '@fontsource-variable/hedvig-letters-serif@5.2.8': {}
+  '@fontsource-variable/albert-sans@5.2.8': {}
 
-  '@fontsource/albert-sans@5.2.8': {}
+  '@fontsource-variable/hedvig-letters-serif@5.2.8': {}
 
   '@img/colour@1.0.0': {}
 
@@ -3302,11 +3312,17 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
 
+  class-variance-authority@0.7.1:
+    dependencies:
+      clsx: 2.1.1
+
   cliui@6.0.0:
     dependencies:
       string-width: 4.2.3
       strip-ansi: 6.0.1
       wrap-ansi: 6.2.0
+
+  clsx@2.1.1: {}
 
   collapse-white-space@2.1.0: {}
 

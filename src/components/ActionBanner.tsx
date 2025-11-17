@@ -1,4 +1,4 @@
-import { HeartIcon } from "lucide-react"
+import { HeartIcon, MessageCircleHeartIcon } from "lucide-react"
 import {
   motion,
   stagger,
@@ -8,11 +8,17 @@ import {
   useSpring,
   useMotionValueEvent,
 } from "motion/react"
-import { ReferButton } from "./ReferButton"
-import { useFontsReady } from "@/hooks"
+import {
+  useDebounce,
+  useFontsReady,
+  useSearchParams,
+  useShareReferralLink,
+} from "@/hooks"
 import { useState } from "react"
 import { useAtomValue } from "jotai"
-import { typingAnimationsCompleteAtom } from "./Header"
+import { typingAnimationsCompleteAtom } from "@/utils"
+import { twMerge } from "tailwind-merge"
+import { cva, VariantProps } from "class-variance-authority"
 
 const childVariants = {
   hidden: {
@@ -27,6 +33,7 @@ export function ActionBanner() {
   const fontsReady = useFontsReady()
 
   const typingAnimationsComplete = useAtomValue(typingAnimationsCompleteAtom)
+  const readyAfterTypingAnimation = useDebounce(typingAnimationsComplete, 400)
 
   const { scrollY } = useScroll()
   const scrollVelocity = useVelocity(scrollY)
@@ -38,7 +45,7 @@ export function ActionBanner() {
     }
   })
 
-  const shouldAnimate = fontsReady && (hasScrolled || typingAnimationsComplete)
+  const shouldAnimate = fontsReady && (hasScrolled || readyAfterTypingAnimation)
 
   // Transform velocity to Y displacement (inverted for counterweight effect)
   const scrollBounce = useTransform(
@@ -60,50 +67,81 @@ export function ActionBanner() {
     mass: 1.2,
   })
 
+  const search = useSearchParams()
+  const phone = search.get("phone")
+
   return (
-    shouldAnimate && (
-      <motion.div
-        initial="hidden"
-        animate="visible"
-        transition={{
-          type: "spring",
-          delayChildren: stagger(0.2),
-          visualDuration: 2,
-        }}
-        className="sticky inset-x-0 bottom-0 z-30 w-full pb-6">
-        <div className="pointer-events-none absolute inset-0 z-20 h-full w-full bg-linear-to-b from-transparent to-slate-50/60" />
+    <motion.div
+      initial="hidden"
+      animate={shouldAnimate ? "visible" : "hidden"}
+      transition={{
+        type: "spring",
+        delayChildren: stagger(0.2),
+        visualDuration: 1,
+      }}
+      className="sticky inset-x-0 bottom-0 z-30 w-full pb-6">
+      <div className="pointer-events-none absolute inset-0 z-20 h-full w-full bg-linear-to-b from-transparent to-slate-50/60" />
 
-        <div className="relative z-30 flex max-w-4xl flex-row items-end justify-center gap-6">
-          <motion.div
-            variants={childVariants}
-            transition={{ type: "spring", visualDuration: 1 }}>
-            <motion.div style={{ y: y1 }}>
-              <DateButton />
-            </motion.div>
+      <div className="relative z-30 flex max-w-4xl flex-row items-end justify-center gap-6">
+        <motion.div variants={childVariants}>
+          <motion.div style={{ y: y1 }}>
+            <DateButton />
           </motion.div>
+        </motion.div>
 
-          <motion.div
-            variants={childVariants}
-            transition={{ type: "spring", visualDuration: 1 }}>
-            <motion.div style={{ y: y2 }}>
-              <ReferButton />
-            </motion.div>
+        <motion.div variants={childVariants}>
+          <motion.div style={{ y: y2 }}>
+            {phone ? <TextMeButton phone={phone} /> : <ReferButton />}
           </motion.div>
-        </div>
-      </motion.div>
-    )
+        </motion.div>
+      </div>
+    </motion.div>
+  )
+}
+
+const button = cva(
+  [
+    "relative grid px-2 py-3 h-14 w-36 cursor-pointer place-content-center overflow-clip rounded-full shadow-xl transition",
+  ],
+  {
+    variants: {
+      variant: {
+        date: "font-leap bg-linear-to-b from-pink-400 to-red-600 tracking-wider text-[1.6rem] leading-none text-white uppercase",
+        secondary:
+          "bg-linear-to-b from-amber-500 to-orange-600 font-sans text-lg font-black text-orange-50 uppercase leading-none",
+      },
+    },
+  },
+)
+
+function Button({
+  className,
+  children,
+  variant,
+  ...props
+}: React.ComponentProps<typeof motion.button> & VariantProps<typeof button>) {
+  return (
+    <motion.button
+      whileTap={{ scale: 0.9 }}
+      className={twMerge(button({ variant }), className)}
+      {...props}>
+      {children}
+    </motion.button>
   )
 }
 
 function DateButton() {
+  const searchParams = useSearchParams()
+  const vip = searchParams.get("vip")
+  const tallyFormId = vip ? "3NPp5l" : "wM5APk"
+
   return (
-    <motion.button
-      whileTap={{ scale: 0.9 }}
+    <Button
+      variant="date"
       data-tally-width="1000"
       data-tally-height="1000"
       data-tally-layout="modal"
-      data-tally-open="wM5APk"
-      className="font-leap relative grid h-14 w-36 cursor-pointer place-content-center overflow-clip rounded-full bg-linear-to-b from-pink-400 to-red-600 px-6 py-4 text-[1.6rem] leading-none tracking-wider text-white uppercase shadow-xl transition">
+      data-tally-open={tallyFormId}>
       <HeartIcon className="animate-float absolute top-0 left-1 origin-center stroke-white/70 blur-[1.5px]" />
       <HeartIcon
         className="animate-float absolute right-1 bottom-0 origin-center stroke-white/70 blur-[1.5px]"
@@ -113,7 +151,33 @@ function DateButton() {
           } as React.CSSProperties
         }
       />
-      Date
-    </motion.button>
+      <div className="-mr-1.5">Date?</div>
+    </Button>
+  )
+}
+
+function ReferButton() {
+  const share = useShareReferralLink()
+  return (
+    <Button variant="secondary" onClick={share}>
+      <span>
+        Refer a <br />
+        <span className="text-orange-200">hot</span> friend
+      </span>
+    </Button>
+  )
+}
+
+// For privacy (without requiring SSR), my phone number is passed as a search parameter embedded in the QR code URL
+function TextMeButton({ phone }: { phone: string }) {
+  return (
+    <a href={`sms:+${phone}`} className="no-underline">
+      <Button
+        variant="secondary"
+        className="text-lg/none font-semibold normal-case">
+        <MessageCircleHeartIcon className="absolute right-2 bottom-3 scale-125 text-orange-200/50 blur-[1px]" />
+        Here’s my number
+      </Button>
+    </a>
   )
 }
