@@ -90,8 +90,7 @@ export function Typewriter({
   return (
     <motion.span
       initial="hidden"
-      // whileInView={shouldAnimate ? "visible" : "hidden"} // TODO need this, too!
-      animate={shouldAnimate ? "visible" : "hidden"}
+      whileInView={shouldAnimate ? "visible" : "hidden"}
       viewport={{ once: true, amount: 0.5 }}
       onAnimationComplete={(definition) =>
         definition === "visible" && onComplete?.()
