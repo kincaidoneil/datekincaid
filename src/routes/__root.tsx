@@ -1,18 +1,16 @@
 /// <reference types="vite/client" />
-
-import "@/global.css"
-
 // Albert Sans variable doesn't render in iOS 26 lockdown mode.
 import "@fontsource/albert-sans"
 import "@fontsource/albert-sans/900.css"
-
-import type { ReactNode } from "react"
 import {
   Outlet,
   createRootRoute,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router"
+import type { ReactNode } from "react"
+
+import "@/global.css"
 
 export const Route = createRootRoute({
   notFoundComponent: () => <h1>Not Found</h1>,

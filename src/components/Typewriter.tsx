@@ -1,5 +1,6 @@
-import React, { useMemo } from "react"
 import { motion } from "motion/react"
+import React, { useMemo } from "react"
+
 import { useFontsReady } from "@/hooks"
 
 interface CharToken {

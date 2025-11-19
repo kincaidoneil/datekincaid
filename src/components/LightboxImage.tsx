@@ -1,5 +1,5 @@
-import { twMerge } from "tailwind-merge"
 import { Image, ImageProps } from "@unpic/react"
+import { twMerge } from "tailwind-merge"
 
 type Props = ImageProps & {
   src: string

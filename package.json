@@ -37,6 +37,7 @@
   "devDependencies": {
     "@mdx-js/rollup": "^3.1.1",
     "@tailwindcss/typography": "^0.5.19",
+    "@trivago/prettier-plugin-sort-imports": "^6.0.0",
     "@types/canvas-confetti": "^1.9.0",
     "@types/qrcode": "^1.5.6",
     "@unpic/react": "^1.0.1",

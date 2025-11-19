@@ -1,3 +1,5 @@
+import { cva, VariantProps } from "class-variance-authority"
+import { useAtomValue } from "jotai"
 import { HeartIcon, MessageCircleHeartIcon } from "lucide-react"
 import {
   motion,
@@ -8,17 +10,16 @@ import {
   useSpring,
   useMotionValueEvent,
 } from "motion/react"
+import { useState } from "react"
+import { twMerge } from "tailwind-merge"
+
 import {
   useDebounce,
   useFontsReady,
   useSearchParams,
   useShareReferralLink,
 } from "@/hooks"
-import { useState } from "react"
-import { useAtomValue } from "jotai"
 import { typingAnimationsCompleteAtom } from "@/utils"
-import { twMerge } from "tailwind-merge"
-import { cva, VariantProps } from "class-variance-authority"
 
 const childVariants = {
   hidden: {

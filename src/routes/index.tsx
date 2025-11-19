@@ -1,8 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router"
-import { useLayoutEffect } from "react"
-import PhotoSwipeLightbox from "photoswipe/lightbox"
-import "photoswipe/style.css"
-import { MotionConfig } from "motion/react"
 import {
   Cake,
   Ruler,
@@ -13,26 +9,29 @@ import {
   School,
   Briefcase,
 } from "lucide-react"
+import { MotionConfig } from "motion/react"
+import PhotoSwipeLightbox from "photoswipe/lightbox"
+import "photoswipe/style.css"
+import { useLayoutEffect } from "react"
 
+import Cat from "@/assets/cat.png?as=metadata"
+import Chow from "@/assets/chow.jpg?as=metadata"
+import Fam from "@/assets/fam.jpg?as=metadata"
+import Melon from "@/assets/melon.jpg?as=metadata"
+import RunningDay from "@/assets/running-day.jpg?as=metadata"
+import RunningNight from "@/assets/running-night.jpg?as=metadata"
+import RunningRain from "@/assets/running-rain.jpg?as=metadata"
 import { ActionBanner } from "@/components/ActionBanner"
-import { Prose } from "@/components/Prose"
-import { LightboxImage } from "@/components/LightboxImage"
+import { AnalyticsProvider } from "@/components/Analytics"
 import { Chip } from "@/components/Chip"
 import { FloatIntoView } from "@/components/FloatIntoView"
-import { HeroImage } from "@/components/HeroImage"
-import { AnalyticsProvider } from "@/components/Analytics"
-import ValuesCopy from "@/copy/values.mdx"
-import LookingForCopy from "@/copy/looking-for.mdx"
-import WhyCopy from "@/copy/why.mdx"
-
-import RunningNight from "@/assets/running-night.jpg?as=metadata"
-import RunningDay from "@/assets/running-day.jpg?as=metadata"
-import RunningRain from "@/assets/running-rain.jpg?as=metadata"
-import Melon from "@/assets/melon.jpg?as=metadata"
-import Chow from "@/assets/chow.jpg?as=metadata"
-import Cat from "@/assets/cat.png?as=metadata"
-import Fam from "@/assets/fam.jpg?as=metadata"
 import { Header } from "@/components/Header"
+import { HeroImage } from "@/components/HeroImage"
+import { LightboxImage } from "@/components/LightboxImage"
+import { Prose } from "@/components/Prose"
+import LookingForCopy from "@/copy/looking-for.mdx"
+import ValuesCopy from "@/copy/values.mdx"
+import WhyCopy from "@/copy/why.mdx"
 
 export const Route = createFileRoute("/")({
   component: Home,

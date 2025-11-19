@@ -1,11 +1,13 @@
-import { useState } from "react"
-import { Typewriter } from "./Typewriter"
 import { useAtomValue, useSetAtom } from "jotai"
+import { useState } from "react"
+
 import { useDebounce, useSearchParams } from "@/hooks"
 import {
   heroAnimationCompleteAtom,
   typingAnimationsCompleteAtom,
 } from "@/utils"
+
+import { Typewriter } from "./Typewriter"
 
 export function Header() {
   const heroAnimationComplete = useAtomValue(heroAnimationCompleteAtom)

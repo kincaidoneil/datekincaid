@@ -1,5 +1,5 @@
-import posthog from "posthog-js"
 import { PostHogProvider } from "@posthog/react"
+import posthog from "posthog-js"
 import { useEffect } from "react"
 
 export function AnalyticsProvider({ children }: React.PropsWithChildren) {

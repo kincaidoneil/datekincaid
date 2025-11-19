@@ -1,9 +1,10 @@
+import { useSetAtom } from "jotai"
 import { motion } from "motion/react"
-import { LightboxImage } from "./LightboxImage"
 
 import Hero from "@/assets/lisbon.jpg?as=metadata"
-import { useSetAtom } from "jotai"
 import { heroAnimationCompleteAtom } from "@/utils"
+
+import { LightboxImage } from "./LightboxImage"
 
 // Hero height based on constrained width and aspect ratio
 // max-w-xl => 36rem

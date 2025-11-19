@@ -1,11 +1,11 @@
-import { defineConfig } from "vite"
-import react from "@vitejs/plugin-react"
-import tailwindcss from "@tailwindcss/vite"
 import mdx from "@mdx-js/rollup"
-import { imagetools } from "vite-imagetools"
-import rehypeExternalLinks from "rehype-external-links"
-import tsconfigPaths from "vite-tsconfig-paths"
+import tailwindcss from "@tailwindcss/vite"
 import { tanstackStart } from "@tanstack/react-start/plugin/vite"
+import react from "@vitejs/plugin-react"
+import rehypeExternalLinks from "rehype-external-links"
+import { defineConfig } from "vite"
+import { imagetools } from "vite-imagetools"
+import tsconfigPaths from "vite-tsconfig-paths"
 
 export default defineConfig({
   plugins: [
