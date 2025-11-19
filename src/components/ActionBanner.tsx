@@ -190,7 +190,7 @@ function TextMeButton({ phone }: { phone: string }) {
     <a href={`sms:${phone}`} className="no-underline">
       <Button
         variant="secondary"
-        className="text-lg/none font-semibold normal-case">
+        className="text-lg/none font-normal normal-case">
         <MessageCircleHeartIcon className="absolute right-2 bottom-3 scale-125 text-orange-200/50 blur-[1px]" />
         Here’s my number
       </Button>
