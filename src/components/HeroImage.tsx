@@ -17,7 +17,9 @@ const SPACER_PERCENT = 1 - STICKY_END_PERCENT
 export function HeroImage() {
   const setAnimationComplete = useSetAtom(heroAnimationCompleteAtom)
   return (
-    /*
+    // Add clip-path here for rounded corners even while image is sticky
+    <div className="relative mx-5" style={{ clipPath: "inset(0 round 24px)" }}>
+      {/*
       Scroll effect:
       Hero image is "sticky" as content scrolls over it, up to my eyes, then starts scrolling away.
 
@@ -25,10 +27,9 @@ export function HeroImage() {
       the hero image starts scrolling away.
 
       Then, add a spacer <div> so the wrapper is the true height of the hero image.
-    */
-    <div className="relative">
+      */}
       <div
-        className="sticky top-8 z-0 px-5"
+        className="sticky top-8"
         style={{
           height: `calc(${HERO_HEIGHT} * ${STICKY_END_PERCENT})`,
         }}>
@@ -55,30 +56,6 @@ export function HeroImage() {
         style={{
           height: `calc(${HERO_HEIGHT} * ${SPACER_PERCENT})`,
         }}></div>
-
-      {/*
-        Inverted corners overlaid on hero image to maintain rounded corners, even while sticky/"shrinking".
-        Refer to this SVG arc reference:
-        https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorials/SVG_from_scratch/Paths#arcs
-
-        Negative margins are to prevent a glitch in Safari iOS where a sliver of the underlying image
-        is visible while scrolling because it doesn't properly overlap.
-      */}
-      <svg
-        className="absolute bottom-0 left-5 -mb-[0.2px] -ml-[0.2px] h-6 w-6"
-        viewBox="0 0 24 24">
-        <path
-          d="M 0 0 A 24 24, 0, 0, 0, 24 24 L 0 24 Z"
-          className="fill-slate-50"></path>
-      </svg>
-
-      <svg
-        className="absolute right-5 bottom-0 -mr-[0.2px] -mb-[0.2px] h-6 w-6"
-        viewBox="0 0 24 24">
-        <path
-          d="M 24 0 A 24 24, 0, 0, 1, 0 24 L 24 24 Z"
-          className="fill-slate-50"></path>
-      </svg>
     </div>
   )
 }

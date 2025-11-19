@@ -33,7 +33,7 @@ export function LightboxImage({
         fetchPriority={priority ? "high" : "low"}
         draggable={false}
         className={twMerge(
-          "cursor-pointer rounded-3xl transition duration-150 active:scale-95",
+          "cursor-pointer rounded-3xl transition duration-150 select-none active:scale-95",
           className,
         )}
         cdn={import.meta.env.VITE_VERCEL_ENV ? "vercel" : undefined}

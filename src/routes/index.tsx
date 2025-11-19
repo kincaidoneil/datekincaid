@@ -63,7 +63,7 @@ function Home() {
   return (
     <AnalyticsProvider>
       <MotionConfig reducedMotion="user">
-        <main className="relative mx-auto max-w-xl pt-8 pb-12 font-serif @2xs:pt-20">
+        <main className="mx-auto max-w-xl pt-8 pb-12 font-serif @2xs:pt-20">
           <HeroImage />
 
           <Prose

@@ -79,10 +79,25 @@ export function ActionBanner() {
         delayChildren: stagger(0.2),
         visualDuration: 1,
       }}
-      className="sticky inset-x-0 bottom-0 z-30 w-full pb-6">
-      <div className="pointer-events-none absolute inset-0 z-20 h-full w-full bg-linear-to-b from-transparent to-slate-50/60" />
-
-      <div className="relative z-30 flex max-w-4xl flex-row items-end justify-center gap-6">
+      // Required so buttons are not visible under the translucent iOS bottom navbar until they animate in
+      variants={{
+        visible: {
+          opacity: 1,
+        },
+        hidden: { opacity: 0 },
+      }}
+      /**
+       * Safari on iOS 26 is incredibly buggy with fixed/sticky position elements and
+       * there's almost zero documentation on its behavior.
+       *
+       * Depending upon the positioning of fixed elements and their translucency,
+       * Safari automatically changes whether the bottom navbar is translucent
+       * or opaque (cropping the viewport).
+       *
+       * Any tweaks here *require* manual testing.
+       */
+      className="sticky inset-x-0 bottom-7 z-30 w-full">
+      <div className="relative z-30 flex flex-row items-end justify-center gap-6">
         <motion.div variants={childVariants}>
           <motion.div style={{ y: y1 }}>
             <DateButton />
@@ -101,14 +116,14 @@ export function ActionBanner() {
 
 const button = cva(
   [
-    "relative grid px-2 py-3 h-14 w-36 cursor-pointer place-content-center overflow-clip rounded-full shadow-xl transition",
+    "relative grid h-14 w-36 cursor-pointer place-content-center overflow-clip rounded-full px-2 py-3 shadow-xl transition",
   ],
   {
     variants: {
       variant: {
-        date: "font-leap bg-linear-to-b from-pink-400 to-red-600 tracking-wider text-[1.6rem] leading-none text-white uppercase",
+        date: "font-leap bg-linear-to-b from-pink-400 to-red-600 text-[1.6rem] leading-none tracking-wider text-white uppercase",
         secondary:
-          "bg-linear-to-b from-amber-500 to-orange-600 font-sans text-lg font-black text-orange-50 uppercase leading-none",
+          "bg-linear-to-b from-amber-500 to-orange-600 font-sans text-lg leading-none font-black text-orange-50 uppercase",
       },
     },
   },
@@ -171,7 +186,7 @@ function ReferButton() {
 // For privacy (without requiring SSR), my phone number is passed as a search parameter embedded in the QR code URL
 function TextMeButton({ phone }: { phone: string }) {
   return (
-    <a href={`sms:+${phone}`} className="no-underline">
+    <a href={`sms:${phone}`} className="no-underline">
       <Button
         variant="secondary"
         className="text-lg/none font-semibold normal-case">

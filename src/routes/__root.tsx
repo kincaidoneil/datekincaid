@@ -2,6 +2,10 @@
 
 import "@/global.css"
 
+// Albert Sans variable doesn't render in iOS 26 lockdown mode.
+import "@fontsource/albert-sans"
+import "@fontsource/albert-sans/900.css"
+
 import type { ReactNode } from "react"
 import {
   Outlet,
