@@ -20,6 +20,7 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
-.vercel
+
+.vscode/
 
 src/routeTree.gen.ts
