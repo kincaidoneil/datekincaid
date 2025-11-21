@@ -15,6 +15,10 @@ export default defineConfig({
         enabled: true,
         crawlLinks: false, // Errors with broken links: we use <a> links for lightbox.
       },
+      router: {
+        // Don't build print/ page in production
+        routeFileIgnorePattern: process.env.VERCEL ? "print" : undefined,
+      },
     }),
     react(), // Must come after Tanstack Start
     tailwindcss(),
