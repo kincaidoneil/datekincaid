@@ -5,6 +5,7 @@ import react from "@vitejs/plugin-react"
 import rehypeExternalLinks from "rehype-external-links"
 import { defineConfig } from "vite"
 import { imagetools } from "vite-imagetools"
+import mkcert from "vite-plugin-mkcert"
 import tsconfigPaths from "vite-tsconfig-paths"
 
 export default defineConfig({
@@ -27,7 +28,9 @@ export default defineConfig({
       rehypePlugins: [
         [rehypeExternalLinks, { target: "_blank", rel: ["noopener"] }],
       ],
+      providerImportSource: "@mdx-js/react",
     }),
+    mkcert(),
   ],
   build: {
     outDir: "dist",
