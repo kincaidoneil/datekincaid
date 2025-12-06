@@ -30,7 +30,7 @@ export default defineConfig({
       ],
       providerImportSource: "@mdx-js/react",
     }),
-    mkcert(),
+    !process.env.VERCEL && mkcert(),
   ],
   build: {
     outDir: "dist",
