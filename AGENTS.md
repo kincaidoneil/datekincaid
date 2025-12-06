@@ -1,7 +1,7 @@
 This project uses:
 
 - TanStack Start / Vite
-- React 19
+- React 19.2
 - pnpm
 - Tailwind v4
 - Prettier (no semicolons)
