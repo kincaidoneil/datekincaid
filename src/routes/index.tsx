@@ -38,7 +38,7 @@ export const Route = createFileRoute("/")({
   head: () => ({
     scripts: [
       {
-        async: true,
+        defer: true, // Faster & prevents hydration error
         src: "https://tally.so/widgets/embed.js",
       },
     ],
