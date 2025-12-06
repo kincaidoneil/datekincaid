@@ -9,6 +9,7 @@ import {
   Scripts,
 } from "@tanstack/react-router"
 import type { ReactNode } from "react"
+import { Toaster } from "sonner"
 
 import "@/global.css"
 
@@ -73,6 +74,15 @@ function RootComponent() {
   return (
     <RootDocument>
       <Outlet />
+      <Toaster
+        toastOptions={{
+          classNames: {
+            toast: "bg-white text-slate-900 shadow-lg",
+            title: "font-serif text-lg",
+            description: "font-serif text-slate-600",
+          },
+        }}
+      />
     </RootDocument>
   )
 }

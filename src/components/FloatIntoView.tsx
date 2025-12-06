@@ -2,7 +2,7 @@ import { motion } from "motion/react"
 
 function Group({
   children,
-  staggerDelay = 0.2,
+  staggerDelay = 0.25,
   ...props
 }: React.ComponentProps<typeof motion.div> & { staggerDelay?: number }) {
   return (

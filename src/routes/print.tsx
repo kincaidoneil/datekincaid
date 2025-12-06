@@ -2,17 +2,15 @@ import { createFileRoute } from "@tanstack/react-router"
 import QRCode from "qrcode"
 import { z } from "zod"
 
-const env = z
-  .object({
-    PHONE_NUMBER: z.e164(),
-    VIP_CODES: z.string().transform((str) =>
-      str
-        .split(",")
-        .map((s) => s.trim())
-        .filter((s) => s.length > 0),
-    ),
-  })
-  .parse(process.env)
+const EnvSchema = z.object({
+  PHONE_NUMBER: z.e164(),
+  VIP_CODES: z.string().transform((str) =>
+    str
+      .split(",")
+      .map((s) => s.trim())
+      .filter((s) => s.length > 0),
+  ),
+})
 
 export const Route = createFileRoute("/print")({
   component: Page,
@@ -23,10 +21,13 @@ export const Route = createFileRoute("/print")({
       },
     ],
   }),
-  loader: () => ({
-    phoneNumber: env.PHONE_NUMBER,
-    vipCodes: env.VIP_CODES,
-  }),
+  loader: () => {
+    const env = EnvSchema.parse(process.env)
+    return {
+      phoneNumber: env.PHONE_NUMBER,
+      vipCodes: env.VIP_CODES,
+    }
+  },
 })
 
 async function Page() {

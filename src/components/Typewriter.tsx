@@ -26,6 +26,7 @@ interface TypewriterProps {
   onComplete?: () => void
   charDelay?: number
   punctuationDelay?: number
+  margin?: string
 }
 
 export function Typewriter({
@@ -34,6 +35,7 @@ export function Typewriter({
   onComplete,
   charDelay = 50,
   punctuationDelay = 400,
+  margin,
 }: TypewriterProps) {
   const fontsReady = useFontsReady()
   const shouldAnimate = play && fontsReady
@@ -60,8 +62,9 @@ export function Typewriter({
               : charDelay
 
             // Gradual slowdown: longer sentence = slower typing, up to 1.6x
-            const modifier = Math.min(1.0 + charsInSentence * 0.02, 1.6)
-            const modifiedDelay = baseDelay * modifier
+            // 2% slower every character, up to 1.6x
+            const slowdownFactor = Math.min(1 + 0.02 * charsInSentence, 1.6)
+            const modifiedDelay = baseDelay * slowdownFactor
 
             wordChars.push({
               char,
@@ -92,7 +95,7 @@ export function Typewriter({
     <motion.span
       initial="hidden"
       whileInView={shouldAnimate ? "visible" : "hidden"}
-      viewport={{ once: true, amount: 0.5 }}
+      viewport={{ once: true, amount: 0.5, margin }}
       onAnimationComplete={(definition) =>
         definition === "visible" && onComplete?.()
       }>

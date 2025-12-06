@@ -1,6 +1,7 @@
 import { usePostHog } from "@posthog/react"
 import confetti from "canvas-confetti"
 import { useCallback, useEffect, useLayoutEffect, useState } from "react"
+import { toast } from "sonner"
 
 export function useSearchParams(): URLSearchParams {
   const [params, setParams] = useState(new URLSearchParams())
@@ -45,15 +46,30 @@ export function useShareReferralLink(): () => Promise<void> {
     const url = new URL("https://datekincaid.com")
     url.searchParams.set("ref", posthog.get_distinct_id())
 
-    try {
-      await navigator.share({
-        title: "Date Kincaid",
-        text: "i found you a man",
-        url: url.toString(),
-      })
-    } catch {
+    const shareData: ShareData = {
+      title: "Date Kincaid",
+      text: "i found you a man",
+      url: url.toString(),
+    }
+
+    if ("canShare" in navigator && !navigator.canShare(shareData)) {
       await navigator.clipboard.writeText(url.toString())
-      // TODO Show toast - copied link to clipboard. Use sonner?
+      toast("Copied link to clipboard!")
+      return
+    }
+
+    if ("share" in navigator) {
+      void navigator
+        .share({
+          title: "Date Kincaid",
+          text: "i found you a man",
+          url: url.toString(),
+        })
+        .catch(async () => {
+          await navigator.clipboard.writeText(url.toString())
+          toast("Copied link to clipboard!")
+        })
+      return
     }
   }, [posthog])
 }

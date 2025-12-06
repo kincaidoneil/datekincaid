@@ -8,6 +8,7 @@ type Props = ImageProps & {
   height: number
   className?: string
   priority?: boolean
+  cover?: boolean
 }
 
 export function LightboxImage({
@@ -17,13 +18,14 @@ export function LightboxImage({
   height,
   className,
   priority,
+  cover = false,
 }: Props) {
   return (
     <a
       href={src}
       data-pswp-width={width}
       data-pswp-height={height}
-      className="block">
+      className={twMerge("block", cover && "h-full")}>
       <Image
         src={src}
         alt={alt}
@@ -34,6 +36,7 @@ export function LightboxImage({
         draggable={false}
         className={twMerge(
           "cursor-pointer rounded-3xl transition duration-150 select-none active:scale-95",
+          cover && "h-full w-full object-cover",
           className,
         )}
         cdn={import.meta.env.VITE_VERCEL_ENV ? "vercel" : undefined}

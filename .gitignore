@@ -21,6 +21,8 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
+# Editor settings
 .vscode/
 
+# TanStack router generated files
 src/routeTree.gen.ts
