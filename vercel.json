@@ -18,5 +18,7 @@
       "source": "/client/:path(.*)",
       "destination": "https://us.i.posthog.com/:path*"
     }
-  ]
+  ],
+  "outputDirectory": "dist",
+  "framework": "vite"
 }

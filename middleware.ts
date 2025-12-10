@@ -1,4 +1,4 @@
-import { next } from "@vercel/edge"
+import { next } from "@vercel/functions"
 
 export default function middleware(request: Request) {
   // Escape the Instagram webview on iOS and Android!
