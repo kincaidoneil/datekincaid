@@ -5,10 +5,9 @@ import "@fontsource/albert-sans/900.css"
 import {
   Outlet,
   createRootRoute,
-  HeadContent,
   Scripts,
+  HeadContent,
 } from "@tanstack/react-router"
-import type { ReactNode } from "react"
 import { Toaster } from "sonner"
 
 import "@/global.css"
@@ -67,12 +66,15 @@ export const Route = createRootRoute({
       },
     ],
   }),
-  component: RootComponent,
+  component: Root,
 })
 
-function RootComponent() {
+// See https://tanstack.com/router/latest/docs/framework/react/guide/document-head-management
+// This isn't supposed to have <html> or <body> - must have standalone index.html entrypoint for SPAs
+function Root() {
   return (
-    <RootDocument>
+    <>
+      <HeadContent />
       <Outlet />
       <Toaster
         toastOptions={{
@@ -83,20 +85,7 @@ function RootComponent() {
           },
         }}
       />
-    </RootDocument>
-  )
-}
-
-function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
-  return (
-    <html lang="en">
-      <head>
-        <HeadContent />
-      </head>
-      <body className="antialiased">
-        {children}
-        <Scripts />
-      </body>
-    </html>
+      <Scripts />
+    </>
   )
 }
