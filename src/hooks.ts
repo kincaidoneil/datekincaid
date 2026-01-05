@@ -1,16 +1,14 @@
 import { usePostHog } from "@posthog/react"
 import confetti from "canvas-confetti"
+import { atom, useAtomValue } from "jotai"
 import { useCallback, useEffect, useLayoutEffect, useState } from "react"
 import { toast } from "sonner"
 
-export function useSearchParams(): URLSearchParams {
-  const [params, setParams] = useState(new URLSearchParams())
+export const queryParamsAtom = atom<Record<string, string | undefined>>({})
 
-  useLayoutEffect(() => {
-    setParams(new URLSearchParams(window.location.search))
-  }, [])
-
-  return params
+/** Merged query params from all page visits (latest values override) */
+export function useQueryParams(): Record<string, string | undefined> {
+  return useAtomValue(queryParamsAtom)
 }
 
 export function useFontsReady(): boolean {

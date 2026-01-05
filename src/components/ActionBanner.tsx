@@ -16,7 +16,7 @@ import { twMerge } from "tailwind-merge"
 import {
   useDebounce,
   useFontsReady,
-  useSearchParams,
+  useQueryParams,
   useShareReferralLink,
 } from "@/hooks"
 import { typingAnimationsCompleteAtom } from "@/utils"
@@ -68,8 +68,7 @@ export function ActionBanner() {
     mass: 1.2,
   })
 
-  const search = useSearchParams()
-  const phone = search.get("phone")
+  const { phone } = useQueryParams()
 
   return (
     <motion.div
@@ -147,8 +146,7 @@ function Button({
 }
 
 function DateButton() {
-  const searchParams = useSearchParams()
-  const vip = searchParams.get("vip")
+  const { vip } = useQueryParams()
   const tallyFormId = vip ? "3NPp5l" : "wM5APk"
 
   return (

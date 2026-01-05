@@ -1,7 +1,7 @@
 import { useAtomValue, useSetAtom } from "jotai"
 import { useState } from "react"
 
-import { useDebounce, useSearchParams } from "@/hooks"
+import { useDebounce, useQueryParams } from "@/hooks"
 import {
   heroAnimationCompleteAtom,
   typingAnimationsCompleteAtom,
@@ -20,8 +20,7 @@ export function Header() {
 
   const setTypingAnimationsComplete = useSetAtom(typingAnimationsCompleteAtom)
 
-  const searchParams = useSearchParams()
-  const vip = searchParams.get("vip")
+  const { vip } = useQueryParams()
 
   return (
     <header className="flex flex-col gap-4">
