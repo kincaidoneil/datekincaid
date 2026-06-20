@@ -6,11 +6,12 @@ import rehypeExternalLinks from "rehype-external-links"
 import { defineConfig } from "vite"
 import { imagetools } from "vite-imagetools"
 import mkcert from "vite-plugin-mkcert"
-import tsconfigPaths from "vite-tsconfig-paths"
 
 export default defineConfig({
+  resolve: {
+    tsconfigPaths: true,
+  },
   plugins: [
-    tsconfigPaths(),
     tanstackRouter({
       target: "react",
       autoCodeSplitting: true,
