@@ -98,7 +98,9 @@ function Home() {
                   </Chip>
                   <Chip Icon={Briefcase} alt="Work">
                     <span>
-                      Founder at{" "}
+                      Exploring
+                      <br />
+                      Previously:{" "}
                       <a
                         href="https://gathers.social?utm_source=date_kincaid"
                         target="_blank"
