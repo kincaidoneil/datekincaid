@@ -1,11 +1,12 @@
 This project uses:
 
-- TanStack Start / Vite
+- TanStack Router / Vite
 - React 19.2
 - pnpm
-- Tailwind v4
+- Tailwind v4 with CSS config
 - Prettier (no semicolons)
 - TypeScript
+- motion (formerly framer-motion)
 
 It's deployed on Vercel.
 
