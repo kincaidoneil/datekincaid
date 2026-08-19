@@ -7,22 +7,22 @@ import { queryParamsAtom } from "@/hooks"
 
 const LOCAL_STORAGE_KEY = "queryParams"
 
+if (typeof window !== "undefined") {
+  const isLocal = ["localhost", "127.0.0.1"].includes(window.location.hostname)
+  if (!isLocal) {
+    posthog.init("phc_UgXKojpO7f6ejjL9oytuntkrlABs0Y1eOvCGG0aZbWn", {
+      api_host: "/client",
+      ui_host: "https://us.posthog.com",
+      person_profiles: "always",
+      defaults: "2025-11-30",
+    })
+  }
+}
+
 let paramsInitialized = false
 
 export function AnalyticsProvider({ children }: React.PropsWithChildren) {
   useEffect(() => {
-    const isLocal = ["localhost", "127.0.0.1"].includes(
-      window.location.hostname,
-    )
-    if (!isLocal) {
-      posthog.init("phc_UgXKojpO7f6ejjL9oytuntkrlABs0Y1eOvCGG0aZbWn", {
-        api_host: "/client",
-        ui_host: "https://us.posthog.com",
-        person_profiles: "always",
-        defaults: "2025-11-30",
-      })
-    }
-
     /**
      * Prevent sharing of *personalized* query params.
      * QR codes include VIP code & phone number. Ensure users don't share these if they copy the URL.
