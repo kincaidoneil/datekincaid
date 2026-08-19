@@ -52,8 +52,8 @@ export function Header() {
           punctuationDelay={250}
           onComplete={() => setTypingAnimationsComplete(true)}>
           {vip
-            ? "Want to grab a drink, build a pillow fort, and plot our political power couple ascension?"
-            : "Let’s grab a drink, build a pillow fort, and plot our political power couple ascension."}
+            ? "Want to grab a drink, build a pillow fort, and plot our political power-couple ascension?"
+            : "Let’s grab a drink, build a pillow fort, and plot our political power-couple ascension."}
         </Typewriter>
       </h4>
     </header>
