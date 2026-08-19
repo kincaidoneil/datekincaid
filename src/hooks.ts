@@ -4,6 +4,8 @@ import { atom, useAtomValue } from "jotai"
 import { useCallback, useEffect, useLayoutEffect, useState } from "react"
 import { toast } from "sonner"
 
+import { REF_PARAM, getRefCode } from "@/referral"
+
 export const queryParamsAtom = atom<Record<string, string | undefined>>({})
 
 /** Merged query params from all page visits (latest values override) */
@@ -41,8 +43,11 @@ export function useShareReferralLink(): () => Promise<void> {
   return useCallback(async () => {
     triggerConfetti()
 
+    const refCode = getRefCode()
     const url = new URL("https://datekincaid.com")
-    url.searchParams.set("ref", posthog.get_distinct_id())
+    url.searchParams.set(REF_PARAM, refCode)
+
+    posthog.capture("referral_shared", { ref_code: refCode })
 
     const shareData: ShareData = {
       title: "Date Kincaid",
