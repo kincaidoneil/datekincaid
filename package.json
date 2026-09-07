@@ -5,6 +5,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "test": "node --experimental-strip-types --test middleware.test.ts",
     "format": "prettier --write .",
     "prepare": "husky"
   },
