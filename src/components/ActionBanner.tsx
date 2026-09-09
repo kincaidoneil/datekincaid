@@ -1,4 +1,4 @@
-import { cva, VariantProps } from "class-variance-authority"
+import { cva, type VariantProps } from "class-variance-authority"
 import { useAtomValue } from "jotai"
 import { HeartIcon, MessageCircleHeartIcon } from "lucide-react"
 import {
