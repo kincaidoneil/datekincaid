@@ -55,24 +55,18 @@ export function useShareReferralLink(): () => Promise<void> {
       url: url.toString(),
     }
 
-    if ("canShare" in navigator && !navigator.canShare(shareData)) {
+    const copyInstead = async () => {
       await navigator.clipboard.writeText(url.toString())
       toast("Copied link to clipboard!")
+    }
+
+    if ("canShare" in navigator && !navigator.canShare(shareData)) {
+      await copyInstead()
       return
     }
 
     if ("share" in navigator) {
-      void navigator
-        .share({
-          title: "Date Kincaid",
-          text: "i found you a man",
-          url: url.toString(),
-        })
-        .catch(async () => {
-          await navigator.clipboard.writeText(url.toString())
-          toast("Copied link to clipboard!")
-        })
-      return
+      void navigator.share(shareData).catch(copyInstead)
     }
   }, [posthog])
 }

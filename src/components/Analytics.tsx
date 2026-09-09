@@ -38,6 +38,27 @@ function sanitizeUrls(properties: Properties | undefined): void {
   }
 }
 
+/**
+ * Anything could be sitting under this key: a half-written value from a killed
+ * tab, or something a visitor typed into devtools. A throw here would strand
+ * the personalized params in the URL, since the scrub below never runs.
+ */
+function readStoredParams(): Record<string, string> {
+  const params: Record<string, string> = {}
+  try {
+    const stored = localStorage.getItem(LOCAL_STORAGE_KEY)
+    if (!stored) return params
+    const parsed: unknown = JSON.parse(stored)
+    if (!isPropertyBag(parsed)) return params
+    for (const [key, value] of Object.entries(parsed)) {
+      if (typeof value === "string") params[key] = value
+    }
+  } catch {
+    // Malformed or unreadable; the URL params below are enough to carry on.
+  }
+  return params
+}
+
 const analyticsEnabled =
   typeof window !== "undefined" &&
   !["localhost", "127.0.0.1"].includes(window.location.hostname)
@@ -85,12 +106,7 @@ export function AnalyticsProvider({ children }: React.PropsWithChildren) {
     paramsInitialized = true
 
     const urlParams = new URLSearchParams(window.location.search)
-    const params: Record<string, string | undefined> = {}
-
-    const stored = localStorage.getItem(LOCAL_STORAGE_KEY)
-    if (stored) {
-      Object.assign(params, JSON.parse(stored))
-    }
+    const params: Record<string, string | undefined> = readStoredParams()
 
     for (const [key, value] of urlParams.entries()) {
       if (key !== REF_PARAM) {
