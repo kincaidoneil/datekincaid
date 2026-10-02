@@ -74,29 +74,29 @@ function Home() {
               <section>
                 <Header />
 
-                <section className="mb-8! grid grid-cols-2 gap-x-1 gap-y-1">
-                  <Chip Icon={Cake} alt="Age">
+                <dl className="mb-8! grid grid-cols-2 gap-x-1 gap-y-1">
+                  <Chip Icon={Cake} label="Age">
                     27
                   </Chip>
-                  <Chip Icon={Ruler} alt="Height">
+                  <Chip Icon={Ruler} label="Height">
                     5' 8.75"
                   </Chip>
-                  <Chip Icon={MapPin} alt="Location">
+                  <Chip Icon={MapPin} label="Lives in">
                     Brooklyn, NY
                   </Chip>
-                  <Chip Icon={House} alt="Hometown">
+                  <Chip Icon={House} label="Hometown">
                     Minneapolis, MN
                   </Chip>
-                  <Chip Icon={Baby} alt="Wants children">
+                  <Chip Icon={Baby} label="Wants children">
                     In 5+ years
                   </Chip>
-                  <Chip Icon={Landmark} alt="Politics">
+                  <Chip Icon={Landmark} label="Politics">
                     Liberal
                   </Chip>
-                  <Chip Icon={School} alt="Education">
+                  <Chip Icon={School} label="Education">
                     Northeastern University
                   </Chip>
-                  <Chip Icon={Briefcase} alt="Work">
+                  <Chip Icon={Briefcase} label="Work">
                     <span>
                       Exploring
                       <br />
@@ -109,7 +109,7 @@ function Home() {
                       </a>
                     </span>
                   </Chip>
-                </section>
+                </dl>
 
                 <section className="flex flex-col gap-4">
                   <FloatIntoView>
