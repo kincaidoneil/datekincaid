@@ -29,11 +29,12 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
+      # Runs first because the router plugin generates the gitignored
+      # src/routeTree.gen.ts during the build, and typecheck needs it.
+      - run: pnpm build
+
       - run: pnpm typecheck
 
       - run: pnpm test
 
       - run: pnpm format:check
-
-      # Vercel builds previews too, but this keeps CI meaningful on its own.
-      - run: pnpm build
