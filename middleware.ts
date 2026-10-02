@@ -41,7 +41,7 @@ function buildEscapeUrl(browser: InAppBrowser, target: URL): string {
   // Manually assembled because `URL` won't let us manipulate a non-standard protocol.
   const withoutProtocol = `${url.host}${url.pathname}${url.search}`
   const fallback = encodeURIComponent(url.toString())
-  return `intent://${withoutProtocol}#Intent;scheme=https;end;S.browser_fallback_url=${fallback}`
+  return `intent://${withoutProtocol}#Intent;scheme=https;S.browser_fallback_url=${fallback};end`
 }
 
 /**
