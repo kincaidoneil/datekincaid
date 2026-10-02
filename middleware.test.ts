@@ -58,7 +58,11 @@ function assertPassthrough(response: Response) {
 function metaRefreshTarget(html: string): string {
   const match = html.match(/content="0;url=([^"]*)"/)
   assert.ok(match, `no meta refresh in: ${html}`)
+  // The URL the browser navigates to, after it decodes the attribute.
   return match[1]
+    .replace(/&quot;/g, '"')
+    .replace(/&lt;/g, "<")
+    .replace(/&amp;/g, "&")
 }
 
 test("leaves a normal browser alone", async () => {
@@ -90,10 +94,25 @@ test("asks Instagram for a real browser on iOS", async () => {
 })
 
 test("uses an intent with a fallback on Android", async () => {
-  const target = metaRefreshTarget(await (await request(ANDROID)).text())
+  const target = metaRefreshTarget(
+    await (await request(ANDROID, { path: "/?ref=swift-otter" })).text(),
+  )
 
-  assert.match(target, /^intent:\/\/datekincaid\.com\//)
-  assert.match(target, /S\.browser_fallback_url=https%3A%2F%2Fdatekincaid\.com/)
+  // Chrome reads extras only between `#Intent;` and `end`, so a fallback after
+  // `end` is ignored and the visitor is stranded if nothing takes the intent.
+  const match = target.match(
+    /^intent:\/\/([^#]+)#Intent;scheme=https;S\.browser_fallback_url=([^;]+);end$/,
+  )
+  assert.ok(match, `malformed intent: ${target}`)
+  const [, withoutProtocol, fallback] = match
+  assert.equal(
+    withoutProtocol,
+    "datekincaid.com/?ref=swift-otter&utm_source=ig",
+  )
+  assert.equal(
+    decodeURIComponent(fallback),
+    "https://datekincaid.com/?ref=swift-otter&utm_source=ig",
+  )
 })
 
 test("only attempts the escape once", async () => {
