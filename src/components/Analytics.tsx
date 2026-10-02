@@ -1,6 +1,10 @@
 import { PostHogProvider } from "@posthog/react"
 import { getDefaultStore } from "jotai"
-import posthog, { type CaptureResult, type Properties } from "posthog-js"
+import posthog, {
+  type CaptureResult,
+  type PostHog,
+  type Properties,
+} from "posthog-js"
 import { useEffect } from "react"
 
 import { queryParamsAtom } from "@/hooks"
@@ -63,12 +67,64 @@ const analyticsEnabled =
   typeof window !== "undefined" &&
   !["localhost", "127.0.0.1"].includes(window.location.hostname)
 
+type ExtensionLoader = (
+  instance: PostHog,
+  kind: string,
+  callback: (error?: unknown) => void,
+) => void
+
+declare global {
+  interface Window {
+    __PosthogExtensions__?: { loadExternalDependency?: ExtensionLoader }
+  }
+}
+
+/** The extensions ad blockers match by filename, so we bundle them. */
+function importBundledExtension(kind: string): Promise<unknown> | undefined {
+  // Remote config picks the recorder's name, and it has changed before.
+  if (kind.endsWith("recorder")) {
+    return import("posthog-js/dist/posthog-recorder")
+  }
+  if (kind === "exception-autocapture") {
+    return import("posthog-js/dist/exception-autocapture")
+  }
+  if (kind === "dead-clicks-autocapture") {
+    return import("posthog-js/dist/dead-clicks-autocapture")
+  }
+  return undefined
+}
+
+/**
+ * Requests go through `/p` on this domain (`vercel.json`), so blocking
+ * PostHog's domains doesn't block them. Ad blockers also match the recorder's
+ * and dead clicks' filenames on any domain, so instead of fetching an
+ * extension, the SDK's loader gets our bundled copy, and only when PostHog
+ * turns that feature on. Any other extension is refused by
+ * `disable_external_dependency_loading`, so a feature switched on in PostHog
+ * but not handled above won't load.
+ */
+function loadExtensionsFromBundle(): void {
+  const extensions = window.__PosthogExtensions__
+  const fetchScript = extensions?.loadExternalDependency
+  if (!extensions || !fetchScript) return
+  extensions.loadExternalDependency = (instance, kind, callback) => {
+    const bundled = importBundledExtension(kind)
+    if (!bundled) return fetchScript(instance, kind, callback)
+    bundled.then(
+      () => callback(),
+      (error: unknown) => callback(error),
+    )
+  }
+}
+
 if (analyticsEnabled) {
+  loadExtensionsFromBundle()
   posthog.init("phc_UgXKojpO7f6ejjL9oytuntkrlABs0Y1eOvCGG0aZbWn", {
-    api_host: "/client",
+    api_host: "/p",
     ui_host: "https://us.posthog.com",
     person_profiles: "always",
     defaults: "2025-11-30",
+    disable_external_dependency_loading: true,
     /**
      * Events are captured before the effect below rewrites the URL, so the
      * query string still holds the VIP code and phone number from a QR card.
