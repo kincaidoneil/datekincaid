@@ -63,12 +63,37 @@ const analyticsEnabled =
   typeof window !== "undefined" &&
   !["localhost", "127.0.0.1"].includes(window.location.hostname)
 
-if (analyticsEnabled) {
+/**
+ * Requests go through `/p` on this domain (`vercel.json`), so blocking
+ * PostHog's domains doesn't block them. Ad blockers also match the recorder's
+ * and dead clicks' filenames on any domain, so those extensions are bundled
+ * here instead of fetched, and nothing else is fetched. An extension switched
+ * on in PostHog's settings but not imported here won't load.
+ *
+ * Init waits for the extensions because on a repeat visit the stored remote
+ * config starts the recorder during init. Resolves to whether PostHog loaded.
+ */
+const posthogReady: Promise<boolean> = analyticsEnabled
+  ? Promise.all([
+      import("posthog-js/dist/posthog-recorder"),
+      import("posthog-js/dist/exception-autocapture"),
+      import("posthog-js/dist/dead-clicks-autocapture"),
+    ]).then(
+      () => {
+        initPostHog()
+        return true
+      },
+      () => false,
+    )
+  : Promise.resolve(false)
+
+function initPostHog(): void {
   posthog.init("phc_UgXKojpO7f6ejjL9oytuntkrlABs0Y1eOvCGG0aZbWn", {
-    api_host: "/client",
+    api_host: "/p",
     ui_host: "https://us.posthog.com",
     person_profiles: "always",
     defaults: "2025-11-30",
+    disable_external_dependency_loading: true,
     /**
      * Events are captured before the effect below rewrites the URL, so the
      * query string still holds the VIP code and phone number from a QR card.
@@ -98,8 +123,8 @@ export function AnalyticsProvider({ children }: React.PropsWithChildren) {
      * 2) Remove all search params from URL
      * 3) Record who referred this visit, then swap `ref` for this visitor's own
      *    code so anything they share onward is attributed to them
-     * 4) Do client navigation
-     * 5) Save merged params to Jotai atom for rendering
+     * 4) Save merged params to Jotai atom for rendering
+     * 5) Do client navigation, once PostHog has initialized
      */
 
     if (paramsInitialized) return
@@ -125,26 +150,30 @@ export function AnalyticsProvider({ children }: React.PropsWithChildren) {
     const refCode = getRefCode()
     const referredBy = parseInboundRef(urlParams.get(REF_PARAM))
 
-    if (analyticsEnabled) {
-      posthog.setPersonProperties({ ref_code: refCode })
-
-      if (referredBy && referredBy !== refCode) {
-        // Set once, so the first referrer keeps credit across repeat visits.
-        posthog.setPersonProperties(undefined, { referred_by: referredBy })
-        posthog.capture("referral_landed", { referred_by: referredBy })
-      }
-    }
-
-    urlParams.set(REF_PARAM, refCode)
-
-    const newSearch = urlParams.toString()
-    const newUrl = newSearch
-      ? `${window.location.pathname}?${newSearch}`
-      : window.location.pathname
-    window.history.replaceState({}, "", newUrl)
-
     const store = getDefaultStore()
     store.set(queryParamsAtom, params)
+
+    // The URL waits for init so the first pageview still reads utm params
+    // from it. If PostHog failed to load, the URL is still scrubbed.
+    void posthogReady.then((loaded) => {
+      if (loaded) {
+        posthog.setPersonProperties({ ref_code: refCode })
+
+        if (referredBy && referredBy !== refCode) {
+          // Set once, so the first referrer keeps credit across repeat visits.
+          posthog.setPersonProperties(undefined, { referred_by: referredBy })
+          posthog.capture("referral_landed", { referred_by: referredBy })
+        }
+      }
+
+      urlParams.set(REF_PARAM, refCode)
+
+      const newSearch = urlParams.toString()
+      const newUrl = newSearch
+        ? `${window.location.pathname}?${newSearch}`
+        : window.location.pathname
+      window.history.replaceState({}, "", newUrl)
+    })
   }, [])
 
   return <PostHogProvider client={posthog}>{children}</PostHogProvider>

@@ -36,4 +36,4 @@ Images in `src/assets` are imported through vite-imagetools with `?as=metadata`,
 
 `Analytics.tsx` strips the query string from every event and rewrites the URL on load. QR cards carry a VIP code and a phone number in the URL, and this is what stops a visitor from sharing those onward. Be careful changing it.
 
-PostHog is proxied through `/client`, rewritten in `vercel.json` to dodge ad blockers.
+PostHog is proxied through `/p`, rewritten in `vercel.json`, so blocking PostHog's domains doesn't block it. Ad blockers also match some of PostHog's script filenames on any domain, so `Analytics.tsx` bundles those extensions with dynamic imports and sets `disable_external_dependency_loading`. If you turn on a PostHog feature that loads an extension (surveys, web vitals), import it there too, or it won't load.
