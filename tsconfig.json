@@ -21,5 +21,11 @@
     },
     "esModuleInterop": true
   },
-  "include": ["src", "middleware.ts", "middleware.test.ts"]
+  "include": [
+    "src",
+    "api",
+    "middleware.ts",
+    "middleware.test.ts",
+    "age.test.ts"
+  ]
 }

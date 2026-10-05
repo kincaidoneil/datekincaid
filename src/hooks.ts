@@ -38,6 +38,33 @@ export function useDebounce<T>(value: T, delay: number): T {
   return debouncedValue
 }
 
+export type Age =
+  | { status: "loading" }
+  | { status: "ready"; age: number }
+  | { status: "unavailable" }
+
+/** Fetched rather than hardcoded so the birthday stays out of the repo. See `api/age.ts`. */
+export function useAge(): Age {
+  const [age, setAge] = useState<Age>({ status: "loading" })
+  useEffect(() => {
+    fetch("/api/age")
+      .then((response) => (response.ok ? response.json() : undefined))
+      .then((body: unknown) => {
+        const age =
+          typeof body === "object" && body !== null && "age" in body
+            ? body.age
+            : undefined
+        setAge(
+          typeof age === "number"
+            ? { status: "ready", age }
+            : { status: "unavailable" },
+        )
+      })
+      .catch(() => setAge({ status: "unavailable" }))
+  }, [])
+  return age
+}
+
 export function useShareReferralLink(): () => Promise<void> {
   const posthog = usePostHog()
   return useCallback(async () => {

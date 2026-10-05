@@ -5,7 +5,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "node --experimental-strip-types --test middleware.test.ts",
+    "test": "node --experimental-strip-types --test middleware.test.ts age.test.ts",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check .",

@@ -2,13 +2,13 @@ A single-page personal site, deployed on Vercel at datekincaid.com.
 
 ## Commands
 
-| Command          | Does                                              |
-| :--------------- | :------------------------------------------------ |
-| `pnpm dev`       | Dev server on https://localhost:5173 (mkcert TLS) |
-| `pnpm build`     | Production build to `dist/`                       |
-| `pnpm test`      | Runs `middleware.test.ts` on the node test runner |
-| `pnpm typecheck` | `tsc --noEmit`                                    |
-| `pnpm format`    | Prettier over the repo                            |
+| Command          | Does                                               |
+| :--------------- | :------------------------------------------------- |
+| `pnpm dev`       | Dev server on https://localhost:5173 (mkcert TLS)  |
+| `pnpm build`     | Production build to `dist/`                        |
+| `pnpm test`      | Runs the `*.test.ts` files on the node test runner |
+| `pnpm typecheck` | `tsc --noEmit`                                     |
+| `pnpm format`    | Prettier over the repo                             |
 
 Run `pnpm typecheck` and `pnpm test` before calling a change done. CI runs both on every PR, along with `format:check` and a build.
 
@@ -37,3 +37,7 @@ Images in `src/assets` are imported through vite-imagetools with `?as=metadata`,
 `Analytics.tsx` strips the query string from every event and rewrites the URL on load. QR cards carry a VIP code and a phone number in the URL, and this is what stops a visitor from sharing those onward. Be careful changing it.
 
 PostHog is proxied through `/p`, rewritten in `vercel.json`, so blocking PostHog's domains doesn't block it. Ad blockers also match some of PostHog's script filenames on any domain, so `Analytics.tsx` bundles those extensions with dynamic imports and sets `disable_external_dependency_loading`. If you turn on a PostHog feature that loads an extension (surveys, web vitals), import it there too, or it won't load.
+
+## Age
+
+The age on the profile comes from `api/age.ts`, not the source, so no commit or exact-date change gives away the birthday. It reads `BIRTHDAY` (`YYYY-MM-DD`) and `AGE_SECRET` (at least 32 random characters) from Vercel env vars, and moves the day the age ticks over to a secret offset of up to 45 days after the birthday. Never hardcode either value or the age. `pnpm dev` doesn't serve `/api`, so the age chip is hidden locally.
