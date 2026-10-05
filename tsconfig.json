@@ -26,6 +26,8 @@
     "api",
     "middleware.ts",
     "middleware.test.ts",
-    "age.test.ts"
+    "age.ts",
+    "age.test.ts",
+    "rebuild.test.ts"
   ]
 }

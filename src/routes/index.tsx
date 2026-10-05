@@ -33,7 +33,6 @@ import { Prose } from "@/components/Prose"
 import LookingForCopy from "@/copy/looking-for.mdx"
 import ValuesCopy from "@/copy/values.mdx"
 import WhyCopy from "@/copy/why.mdx"
-import { useAge } from "@/hooks"
 
 export const Route = createFileRoute("/")({
   component: Home,
@@ -48,7 +47,6 @@ export const Route = createFileRoute("/")({
 })
 
 function Home() {
-  const age = useAge()
   useLayoutEffect(() => {
     const lightbox = new PhotoSwipeLightbox({
       gallery: "body",
@@ -77,9 +75,9 @@ function Home() {
                 <Header />
 
                 <dl className="mb-8! grid grid-cols-2 gap-x-1 gap-y-1">
-                  {age.status !== "unavailable" && (
+                  {__AGE__ !== null && (
                     <Chip Icon={Cake} label="Age">
-                      {age.status === "ready" ? age.age : "\u00a0"}
+                      {__AGE__}
                     </Chip>
                   )}
                   <Chip Icon={Ruler} label="Height">

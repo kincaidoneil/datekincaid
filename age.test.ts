@@ -1,7 +1,7 @@
 import assert from "node:assert/strict"
 import { test } from "node:test"
 
-import { GET, parseConfig, shownAge, tickOver } from "./api/age.ts"
+import { parseConfig, shownAge, tickOver } from "./age.ts"
 
 const SECRET = "a".repeat(32)
 
@@ -77,25 +77,4 @@ test("misconfiguration is rejected rather than guessed at", () => {
     parseConfig({ BIRTHDAY: "10/15/1998", AGE_SECRET: SECRET }),
     undefined,
   )
-})
-
-test("the endpoint returns the age, or 503 when unconfigured", async () => {
-  const { BIRTHDAY, AGE_SECRET } = process.env
-  try {
-    delete process.env.BIRTHDAY
-    assert.equal((await GET()).status, 503)
-
-    process.env.BIRTHDAY = "1998-10-15"
-    process.env.AGE_SECRET = SECRET
-    const response = await GET()
-    assert.equal(response.status, 200)
-    assert.deepEqual(await response.json(), {
-      age: await shownAge(config("1998-10-15"), new Date()),
-    })
-  } finally {
-    process.env.BIRTHDAY = BIRTHDAY
-    process.env.AGE_SECRET = AGE_SECRET
-    if (BIRTHDAY === undefined) delete process.env.BIRTHDAY
-    if (AGE_SECRET === undefined) delete process.env.AGE_SECRET
-  }
 })

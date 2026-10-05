@@ -40,4 +40,6 @@ PostHog is proxied through `/p`, rewritten in `vercel.json`, so blocking PostHog
 
 ## Age
 
-The age on the profile comes from `api/age.ts`, not the source, so no commit or exact-date change gives away the birthday. It reads `BIRTHDAY` (`YYYY-MM-DD`) and `AGE_SECRET` (at least 32 random characters) from Vercel env vars, and moves the day the age ticks over to a secret offset of up to 45 days after the birthday. Never hardcode either value or the age. `pnpm dev` doesn't serve `/api`, so the age chip is hidden locally.
+The age on the profile is computed at build time by `age.ts` and inlined as `__AGE__`, so no commit or exact-date change gives away the birthday. It reads `BIRTHDAY` (`YYYY-MM-DD`) and `AGE_SECRET` (at least 32 random characters) from Vercel env vars, and moves the day the age ticks over to a secret offset of up to 45 days after the birthday. A daily Vercel cron hits `api/rebuild.ts`, which triggers a deploy hook (`DEPLOY_HOOK_URL`, guarded by `CRON_SECRET`) so the age stays current.
+
+Never hardcode the birthday or the age. Builds on Vercel fail without the env vars. Local builds without them leave the age chip out.

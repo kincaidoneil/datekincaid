@@ -1,5 +1,6 @@
 /**
- * Serves the age shown on the profile without publishing the birthday.
+ * Computes the age shown on the profile, at build time, without publishing the
+ * birthday. `api/rebuild.ts` rebuilds the site daily so it stays current.
  *
  * Hardcoding the age leaks the birthday through the commit that bumps it, and
  * computing it on the exact date leaks the birthday to anyone who checks the
@@ -62,14 +63,4 @@ export async function shownAge(config: AgeConfig, now: Date) {
   let year = now.getUTCFullYear()
   while ((await tickOver(config, year)) > now.getTime()) year--
   return year - config.birthday.year
-}
-
-export async function GET() {
-  const config = parseConfig(process.env)
-  if (!config) return new Response(null, { status: 503 })
-
-  return Response.json(
-    { age: await shownAge(config, new Date()) },
-    { headers: { "cache-control": "public, max-age=0, s-maxage=3600" } },
-  )
 }

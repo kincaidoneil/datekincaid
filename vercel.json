@@ -24,5 +24,11 @@
     }
   ],
   "outputDirectory": "dist",
-  "framework": "vite"
+  "framework": "vite",
+  "crons": [
+    {
+      "path": "/api/rebuild",
+      "schedule": "0 9 * * *"
+    }
+  ]
 }
