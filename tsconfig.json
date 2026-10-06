@@ -27,7 +27,6 @@
     "middleware.ts",
     "middleware.test.ts",
     "age.ts",
-    "age.test.ts",
-    "rebuild.test.ts"
+    "age.test.ts"
   ]
 }
