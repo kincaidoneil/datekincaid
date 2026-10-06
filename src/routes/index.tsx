@@ -75,9 +75,11 @@ function Home() {
                 <Header />
 
                 <dl className="mb-8! grid grid-cols-2 gap-x-1 gap-y-1">
-                  <Chip Icon={Cake} label="Age">
-                    27
-                  </Chip>
+                  {__AGE__ !== null && (
+                    <Chip Icon={Cake} label="Age">
+                      {__AGE__}
+                    </Chip>
+                  )}
                   <Chip Icon={Ruler} label="Height">
                     5' 8.75"
                   </Chip>
