@@ -26,3 +26,6 @@ pnpm-debug.log*
 
 # TanStack router generated files
 src/routeTree.gen.ts
+
+# Vercel CLI project link and pulled env files
+.vercel
